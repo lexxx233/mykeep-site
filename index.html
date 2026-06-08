@@ -312,7 +312,7 @@
     background:linear-gradient(180deg, rgba(9,29,47,0), rgba(20,56,90,.22));
   }
   .components-grid{
-    display:grid;grid-template-columns:1.7fr 1fr;gap:24px;align-items:stretch;
+    display:grid;gap:24px;
   }
   .capsule{
     padding:46px 46px 42px;border-radius:5px;
@@ -369,22 +369,18 @@
   .repo-link svg{width:18px;height:18px;}
   .stack-note{font-family:'EB Garamond';font-size:.92rem;color:var(--mist-faint);font-style:italic;}
 
-  .comingsoon{
-    display:flex;flex-direction:column;justify-content:center;
-    padding:42px 34px;text-align:center;border-radius:5px;
-    border:1px dashed var(--hair);
+  .soon-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .soon-card{
+    border:1px dashed var(--hair);border-radius:5px;padding:28px 26px;
     background:linear-gradient(180deg, rgba(238,231,215,.03), rgba(238,231,215,.008));
-    position:relative;
+    display:flex;flex-direction:column;
   }
-  .comingsoon .tag{
-    font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.34em;text-transform:uppercase;
-    color:var(--gold);margin-bottom:14px;
-  }
-  .comingsoon h4{
-    font-family:'Cinzel',serif;font-weight:500;font-size:1.18rem;letter-spacing:.04em;
-    margin:0 0 12px;color:var(--marble);
-  }
-  .comingsoon p{margin:0;color:var(--mist);font-size:.98rem;line-height:1.55;}
+  .soon-card .cap-ic{width:34px;height:34px;color:var(--gold);margin-bottom:16px;opacity:.92;}
+  .soon-card .tag{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);margin:0 0 10px;}
+  .soon-card h3{font-family:'Cinzel',serif;font-weight:500;font-size:1.2rem;letter-spacing:.03em;margin:0 0 12px;color:var(--gold-bright);}
+  .soon-card > p{margin:0;color:var(--mist);font-size:.97rem;line-height:1.6;}
+  .soon-card em{color:var(--gold-bright);font-style:italic;}
+  .soon-card .gives{margin-top:16px;color:var(--gold);font-style:italic;font-size:.95rem;font-family:'Cormorant Garamond',serif;}
 
   /* ============ MANIFESTO / PULL QUOTE ============ */
   .manifesto{
@@ -450,7 +446,7 @@
   /* ============ RESPONSIVE ============ */
   @media (max-width:900px){
     .cards{grid-template-columns:1fr;}
-    .components-grid{grid-template-columns:1fr;}
+    .soon-grid{grid-template-columns:1fr;}
     .capsule{padding:38px 28px;}
     .nav-links{gap:14px;}
     .nav-links a{font-size:.6rem;letter-spacing:.14em;}
@@ -593,12 +589,29 @@
         </article>
 
         <!-- More to come -->
-        <article class="comingsoon reveal">
-          <p class="tag">Coming next</p>
-          <h4>More capabilities</h4>
-          <p><b style="color:var(--gold-bright)">Tool Forge</b> — a local server for plug-and-play skills &amp; tools any agent loads off the stick.</p>
-          <p style="margin-top:14px"><b style="color:var(--gold-bright)">Key Vault</b> — your API keys, encrypted on the stick, so the agent can act <em>as you</em> — keys never touch the cloud.</p>
-        </article>
+        <div class="soon-grid">
+          <article class="soon-card reveal">
+            <svg class="cap-ic" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M15 5 V13 M25 5 V13"/>
+              <path d="M10 13 H30 V16 A10 10 0 0 1 20 26 A10 10 0 0 1 10 16 Z"/>
+              <path d="M20 26 V35"/>
+            </svg>
+            <p class="tag">Planned</p>
+            <h3>Tool Forge</h3>
+            <p>A local server that lets any agent load plug-and-play skills and tools off the stick — capabilities it can pick up and put down.</p>
+            <p class="gives">→ your agent can <em>do</em> more</p>
+          </article>
+          <article class="soon-card reveal">
+            <svg class="cap-ic" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="14" cy="14" r="7"/>
+              <path d="M19 19 L32 32"/><path d="M28 28 L31 25"/><path d="M24 24 L27 21"/>
+            </svg>
+            <p class="tag">Planned</p>
+            <h3>Key Vault</h3>
+            <p>Your API keys, encrypted on the stick, so the agent can take authenticated actions <em>as you</em> — keys never touch the cloud or the model provider.</p>
+            <p class="gives">→ your agent can <em>act</em> as you</p>
+          </article>
+        </div>
       </div>
     </div>
   </section>
