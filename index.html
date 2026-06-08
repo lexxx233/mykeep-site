@@ -381,6 +381,11 @@
   .soon-card > p{margin:0;color:var(--mist);font-size:.97rem;line-height:1.6;}
   .soon-card em{color:var(--gold-bright);font-style:italic;}
   .soon-card .gives{margin-top:16px;color:var(--gold);font-style:italic;font-size:.95rem;font-family:'Cormorant Garamond',serif;}
+  .soon-link{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;margin-top:auto;padding-top:20px;
+    font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;font-weight:500;
+    color:var(--gold);transition:color .25s var(--ease);}
+  .soon-link:hover{color:var(--gold-bright);}
+  .soon-link svg{width:14px;height:14px;}
 
   /* ============ MANIFESTO / PULL QUOTE ============ */
   .manifesto{
@@ -584,7 +589,7 @@
               <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.4 7.4 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
               Open on GitHub
             </a>
-            <span class="stack-note">Apache-licensed · runs from a USB stick</span>
+            <span class="stack-note">MIT-licensed · runs from a USB stick</span>
           </div>
         </article>
 
@@ -600,6 +605,10 @@
             <h3>Foundry</h3>
             <p>A local server that hosts plug-and-play skills and tools <em>and</em> the infrastructure they run on — database, queue, cache, object storage — a backend-in-a-box, all sealed on the stick.</p>
             <p class="gives">→ your agent can <em>do</em> more</p>
+            <a class="soon-link" href="https://github.com/lexxx233/joyvend-foundry" target="_blank" rel="noopener">
+              <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.4 7.4 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+              Read the vision
+            </a>
           </article>
           <article class="soon-card reveal">
             <svg class="cap-ic" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -610,6 +619,10 @@
             <h3>SecretVault</h3>
             <p>Your secrets, sealed on the stick. The agent acts through SecretVault <em>by reference</em> — it never sees the raw key, so nothing leaks to the cloud or the model provider.</p>
             <p class="gives">→ your agent can <em>act</em> as you</p>
+            <a class="soon-link" href="https://github.com/lexxx233/joyvend-secretvault" target="_blank" rel="noopener">
+              <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.4 7.4 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+              Read the vision
+            </a>
           </article>
         </div>
       </div>
