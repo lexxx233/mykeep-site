@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>joyvend — local AI capabilities, on a USB stick</title>
+<meta name="description" content="joyvend is a portable suite of local capabilities — memory, tools, keys — that make any AI agent yours. Private, personal, carried on a USB stick. No cloud, no install.">
+<meta name="theme-color" content="#0c2438">
+<meta property="og:title" content="joyvend — local AI capabilities, on a USB stick">
+<meta property="og:description" content="A portable suite of capabilities that make any AI agent yours — memory, tools, keys, sealed on a USB stick. Private, personal, portable.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://joyvend.io">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230c2438'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' font-weight='700' text-anchor='middle' fill='%23c9a24b'%3Ej%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cardo:ital@0;1&family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --aegean-deep:#0c2438;
+    --aegean:#0f2c43;
+    --aegean-2:#14385a;
+    --aegean-lift:#1b466e;
+    --marble:#eee7d7;
+    --marble-soft:#e2d8c2;
+    --gold:#c9a24b;
+    --gold-bright:#e0c074;
+    --gold-deep:#9c7a32;
+    --ink:#0a1c2c;
+    --mist:rgba(238,231,215,.72);
+    --mist-faint:rgba(238,231,215,.62);
+    --hair:rgba(201,162,75,.55);
+    --maxw:1160px;
+    --ease:cubic-bezier(.22,.61,.36,1);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    background:var(--aegean-deep);
+    color:var(--marble);
+    font-family:'EB Garamond',Georgia,serif;
+    font-size:clamp(17px,1.05vw + 13px,20px);
+    line-height:1.72;
+    letter-spacing:.1px;
+    overflow-x:hidden;
+    text-rendering:optimizeLegibility;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ---- atmospheric backdrop: aegean depth, soft golden glow, faint star-marble grain ---- */
+  body::before{
+    content:"";
+    position:fixed;inset:0;z-index:-3;
+    background:
+      radial-gradient(120% 80% at 50% -10%, rgba(224,192,116,.16) 0%, rgba(224,192,116,0) 46%),
+      radial-gradient(95% 70% at 50% 30%, rgba(27,70,110,.55) 0%, rgba(15,44,67,0) 70%),
+      linear-gradient(180deg, #0e2840 0%, #0c2438 38%, #091d2f 100%);
+  }
+  body::after{
+    content:"";
+    position:fixed;inset:0;z-index:-2;pointer-events:none;
+    opacity:.05;
+    background-image:radial-gradient(rgba(238,231,215,.9) .5px, transparent .5px);
+    background-size:3px 3px;
+    mix-blend-mode:screen;
+  }
+
+  a{color:inherit;text-decoration:none;}
+  img,svg{display:block;max-width:100%;}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+
+  /* ---- inscriptional display caps ---- */
+  .cinzel{font-family:'Cinzel',serif;}
+  .eyebrow{
+    font-family:'Cinzel',serif;
+    font-size:.72rem;
+    letter-spacing:.32em;
+    text-transform:uppercase;
+    color:var(--gold-bright);
+    font-weight:500;
+    margin:0;
+  }
+
+  /* ---- meander (greek key): ONE continuous unicursal key, reused at both scales ---- */
+  /* tile: 16x16, a square-spiral key on a continuous baseline (equal 4px channels) */
+  .meander, .meander-rule{
+    --key: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><path d='M0,16 L0,0 L12,0 L12,12 L4,12 L4,4 L8,4 L8,8 L12,8 L12,16 L16,16' fill='none' stroke='black' stroke-width='2'/></svg>");
+    width:100%;
+    background:var(--gold);
+    -webkit-mask:var(--key) repeat-x center / 16px 16px;
+            mask:var(--key) repeat-x center / 16px 16px;
+  }
+  .meander{height:16px;opacity:.9;}
+  /* the divider uses the same key, slightly smaller and a touch stronger for legibility */
+  .meander-rule{
+    height:14px;
+    -webkit-mask-size:14px 14px;
+            mask-size:14px 14px;
+    opacity:.7;
+  }
+  .divider{
+    display:flex;align-items:center;gap:18px;
+    margin:0 auto;
+    max-width:520px;
+    opacity:.85;
+  }
+  .divider .meander-rule{flex:1;}
+  .divider .glyph{
+    color:var(--gold);font-size:1.1rem;flex:0 0 auto;line-height:1;
+    filter:drop-shadow(0 0 8px rgba(224,192,116,.35));
+  }
+
+  /* ============ TOP MEANDER ============ */
+  .topband{
+    position:relative;z-index:5;
+    border-bottom:1px solid var(--hair);
+    background:linear-gradient(180deg, rgba(9,29,47,.6), transparent);
+  }
+  .topband .meander{height:14px;opacity:.5;}
+
+  /* ============ NAV ============ */
+  header.nav{
+    position:relative;z-index:6;
+  }
+  .nav-inner{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:22px 0 18px;
+  }
+  .brandmark{
+    font-family:'Cinzel',serif;
+    font-weight:600;
+    letter-spacing:.28em;
+    font-size:1.02rem;
+    color:var(--marble);
+    text-transform:uppercase;
+  }
+  .brandmark .v{color:var(--gold-bright);}
+  .nav-links{display:flex;gap:30px;align-items:center;}
+  .nav-links a{
+    font-family:'Cinzel',serif;
+    font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--mist);font-weight:400;
+    transition:color .3s var(--ease);
+  }
+  .nav-links a:hover{color:var(--gold-bright);}
+  .nav-links a.ghost{
+    border:1px solid var(--hair);
+    padding:9px 16px;border-radius:2px;color:var(--marble);
+  }
+  .nav-links a.ghost:hover{border-color:var(--gold);color:var(--gold-bright);}
+
+  /* ============ HERO ============ */
+  .hero{
+    position:relative;
+    text-align:center;
+    padding:64px 0 92px;
+    overflow:hidden;
+  }
+  .hero-glow{
+    position:absolute;left:50%;top:8%;transform:translateX(-50%);
+    width:680px;height:680px;max-width:120vw;
+    background:radial-gradient(circle, rgba(224,192,116,.20) 0%, rgba(224,192,116,0) 62%);
+    filter:blur(6px);
+    z-index:0;pointer-events:none;
+  }
+  .hero-inner{position:relative;z-index:2;}
+
+  .wordmark{
+    font-family:'Cinzel',serif;
+    font-weight:600;
+    font-size:clamp(3.2rem,12vw,7.4rem);
+    line-height:.96;
+    letter-spacing:.04em;
+    margin:0;
+    color:var(--marble);
+    text-shadow:0 1px 0 rgba(0,0,0,.35), 0 0 40px rgba(224,192,116,.10);
+  }
+  .wordmark .joy{color:var(--marble);}
+  .wordmark .vend{
+    color:var(--gold);
+    position:relative;
+    background:linear-gradient(180deg,var(--gold-bright),var(--gold) 55%,var(--gold-deep));
+    -webkit-background-clip:text;background-clip:text;
+    -webkit-text-fill-color:transparent;
+    text-shadow:0 0 34px rgba(224,192,116,.28);
+  }
+  .wordmark-rule{
+    width:118px;height:2px;margin:24px auto 0;
+    background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  }
+
+  .hero-headline{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:500;
+    font-size:clamp(1.5rem,3vw,2.25rem);
+    line-height:1.18;
+    letter-spacing:.2px;
+    margin:30px auto 18px;
+    max-width:18ch;
+    color:var(--marble);
+  }
+  .hero-headline em{color:var(--gold-bright);font-style:italic;}
+
+  .hero-sub{
+    font-size:1.08rem;
+    color:var(--mist);
+    max-width:46ch;margin:0 auto 14px;
+  }
+  .creed{
+    display:flex;flex-wrap:wrap;gap:10px 14px;justify-content:center;
+    margin:18px auto 0;
+    font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.26em;
+    text-transform:uppercase;color:var(--gold-bright);
+  }
+  .creed span{display:inline-flex;align-items:center;gap:14px;}
+  .creed span::after{content:"·";color:var(--gold);opacity:.6;}
+  .creed span:last-child::after{content:"";}
+
+  .cta-row{
+    display:flex;gap:16px;justify-content:center;flex-wrap:wrap;
+    margin-top:40px;
+  }
+  .btn{
+    font-family:'Cinzel',serif;
+    font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;
+    padding:15px 30px;border-radius:2px;
+    transition:transform .3s var(--ease), box-shadow .3s var(--ease), background .3s var(--ease), color .3s var(--ease);
+    display:inline-flex;align-items:center;gap:10px;
+    border:1px solid transparent;cursor:pointer;
+  }
+  .btn-gold{
+    background:linear-gradient(180deg,var(--gold-bright),var(--gold));
+    color:#23180a;
+    box-shadow:0 8px 26px rgba(201,162,75,.26), inset 0 1px 0 rgba(255,255,255,.4);
+    font-weight:600;
+  }
+  .btn-gold:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(201,162,75,.36), inset 0 1px 0 rgba(255,255,255,.5);}
+  .btn-ghost{
+    border-color:var(--hair);color:var(--marble);
+    background:rgba(238,231,215,.02);
+  }
+  .btn-ghost:hover{border-color:var(--gold);color:var(--gold-bright);transform:translateY(-2px);}
+
+  /* ============ section scaffolding ============ */
+  section{position:relative;}
+  .section-pad{padding:96px 0;}
+  .section-head{text-align:center;max-width:64ch;margin:0 auto 56px;}
+  .section-head .eyebrow{margin-bottom:18px;}
+  .section-title{
+    font-family:'Cinzel',serif;font-weight:600;
+    font-size:clamp(1.9rem,4.2vw,3.05rem);
+    letter-spacing:.02em;line-height:1.12;margin:0 0 18px;
+    color:var(--marble);
+  }
+  .section-lede{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(1.2rem,2vw,1.5rem);
+    color:var(--mist);font-weight:400;margin:0 auto;max-width:54ch;line-height:1.5;
+  }
+
+  /* surface panels read like polished marble tablets */
+  .panel{
+    background:linear-gradient(180deg, rgba(238,231,215,.055), rgba(238,231,215,.02));
+    border:1px solid var(--hair);
+    border-radius:4px;
+    backdrop-filter:blur(2px);
+  }
+
+  /* ============ MISSION + VALUE CARDS ============ */
+  .mission{
+    border-top:1px solid var(--hair);
+    border-bottom:1px solid var(--hair);
+    background:linear-gradient(180deg, rgba(20,56,90,.30), rgba(12,36,56,0));
+  }
+  .cards{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:8px;
+  }
+  .card{
+    padding:38px 30px 34px;
+    border-radius:4px;
+    background:linear-gradient(180deg, rgba(238,231,215,.06), rgba(238,231,215,.015));
+    border:1px solid var(--hair);
+    position:relative;
+    transition:transform .4s var(--ease), border-color .4s var(--ease), box-shadow .4s var(--ease);
+    overflow:hidden;
+  }
+  .card::before{
+    content:"";position:absolute;left:0;top:0;right:0;height:2px;
+    background:linear-gradient(90deg,transparent,var(--gold),transparent);
+    opacity:.55;
+  }
+  .card:hover{
+    transform:translateY(-5px);
+    border-color:rgba(201,162,75,.6);
+    box-shadow:0 22px 48px rgba(0,0,0,.34);
+  }
+  .card .glyph{
+    width:48px;height:48px;margin-bottom:22px;color:var(--gold-bright);
+    filter:drop-shadow(0 0 10px rgba(224,192,116,.30));
+  }
+  .card h3{
+    font-family:'Cinzel',serif;font-weight:500;
+    font-size:1.04rem;letter-spacing:.1em;text-transform:uppercase;
+    margin:0 0 12px;color:var(--marble);
+  }
+  .card p{margin:0;color:var(--mist);font-size:1rem;line-height:1.62;}
+
+  /* ============ COMPONENTS ============ */
+  .components{
+    background:linear-gradient(180deg, rgba(9,29,47,0), rgba(20,56,90,.22));
+  }
+  .components-grid{
+    display:grid;grid-template-columns:1.7fr 1fr;gap:24px;align-items:stretch;
+  }
+  .capsule{
+    padding:46px 46px 42px;border-radius:5px;
+    position:relative;overflow:hidden;
+    background:
+      radial-gradient(120% 120% at 100% 0%, rgba(27,70,110,.5), rgba(12,36,56,0) 60%),
+      linear-gradient(180deg, rgba(238,231,215,.07), rgba(238,231,215,.02));
+    border:1px solid rgba(201,162,75,.42);
+    box-shadow:0 20px 60px rgba(0,0,0,.3);
+  }
+  /* gold meander hairline along the top of the capsule */
+  .capsule .cap-meander{
+    position:absolute;left:0;right:0;top:0;height:14px;opacity:.5;
+  }
+  .cap-badge{
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:'Cinzel',serif;font-size:.64rem;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--gold-bright);border:1px solid var(--hair);
+    padding:6px 13px;border-radius:2px;margin-bottom:24px;
+  }
+  .cap-badge .dot{width:7px;height:7px;border-radius:50%;background:var(--gold-bright);box-shadow:0 0 10px rgba(224,192,116,.9);}
+  .capsule h3{
+    font-family:'Cinzel',serif;font-weight:600;
+    font-size:clamp(1.45rem,2.6vw,1.95rem);letter-spacing:.01em;
+    margin:0 0 8px;color:var(--marble);
+  }
+  .capsule .kicker{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:1.28rem;color:var(--gold-bright);margin:0 0 22px;
+  }
+  .capsule p.lede{color:var(--mist);margin:0 0 28px;max-width:52ch;}
+  .specs{list-style:none;padding:0;margin:0 0 32px;display:grid;grid-template-columns:1fr 1fr;gap:14px 28px;}
+  .specs li{
+    position:relative;padding-left:26px;color:var(--marble);
+    font-size:.98rem;line-height:1.45;
+  }
+  .specs li::before{
+    content:"";position:absolute;left:0;top:.5em;
+    width:11px;height:11px;border:1.5px solid var(--gold);border-radius:50%;
+    background:radial-gradient(circle,var(--gold-bright) 0 35%, transparent 38%);
+  }
+  .specs li b{color:var(--marble);font-weight:600;}
+  .specs li span{color:var(--mist);}
+  .cap-cta{display:flex;gap:14px;flex-wrap:wrap;align-items:center;}
+  .repo-link{
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--aegean);background:linear-gradient(180deg,var(--gold-bright),var(--gold));
+    padding:13px 22px;border-radius:2px;font-weight:600;
+    box-shadow:0 8px 22px rgba(201,162,75,.22),inset 0 1px 0 rgba(255,255,255,.4);
+    transition:transform .3s var(--ease),box-shadow .3s var(--ease);
+  }
+  .repo-link:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(201,162,75,.34),inset 0 1px 0 rgba(255,255,255,.5);}
+  .repo-link svg{width:18px;height:18px;}
+  .stack-note{font-family:'EB Garamond';font-size:.92rem;color:var(--mist-faint);font-style:italic;}
+
+  .comingsoon{
+    display:flex;flex-direction:column;justify-content:center;
+    padding:42px 34px;text-align:center;border-radius:5px;
+    border:1px dashed var(--hair);
+    background:linear-gradient(180deg, rgba(238,231,215,.03), rgba(238,231,215,.008));
+    position:relative;
+  }
+  .comingsoon .tag{
+    font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.34em;text-transform:uppercase;
+    color:var(--gold);margin-bottom:14px;
+  }
+  .comingsoon h4{
+    font-family:'Cinzel',serif;font-weight:500;font-size:1.18rem;letter-spacing:.04em;
+    margin:0 0 12px;color:var(--marble);
+  }
+  .comingsoon p{margin:0;color:var(--mist);font-size:.98rem;line-height:1.55;}
+
+  /* ============ MANIFESTO / PULL QUOTE ============ */
+  .manifesto{
+    text-align:center;
+    padding:120px 0;
+    position:relative;
+    border-top:1px solid var(--hair);
+    background:
+      radial-gradient(80% 120% at 50% 0%, rgba(224,192,116,.10), rgba(12,36,56,0) 60%),
+      linear-gradient(180deg, rgba(9,29,47,.4), rgba(12,36,56,0));
+  }
+  .quote{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:500;
+    font-size:clamp(1.6rem,3.6vw,2.55rem);
+    line-height:1.34;
+    color:var(--marble);
+    max-width:24ch;margin:0 auto 26px;
+    font-style:italic;
+  }
+  .quote .gold{color:var(--gold-bright);font-style:normal;}
+  .attrib{
+    font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--gold);
+  }
+
+  /* ============ FOOTER ============ */
+  footer{
+    border-top:1px solid var(--hair);
+    padding-top:0;
+    background:linear-gradient(180deg, rgba(9,29,47,0), rgba(7,22,36,.6));
+  }
+  footer .meander{height:14px;opacity:.4;}
+  .foot-inner{
+    display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;
+    padding:42px 0 48px;
+  }
+  .foot-brand{
+    font-family:'Cinzel',serif;letter-spacing:.26em;text-transform:uppercase;
+    font-size:.92rem;color:var(--marble);font-weight:600;
+  }
+  .foot-brand .v{color:var(--gold-bright);}
+  .foot-links{display:flex;gap:26px;flex-wrap:wrap;}
+  .foot-links a{
+    font-family:'Cinzel',serif;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--mist);transition:color .3s var(--ease);
+  }
+  .foot-links a:hover{color:var(--gold-bright);}
+  .copyright{
+    font-family:'EB Garamond';font-size:.9rem;color:var(--mist-faint);
+    text-align:center;padding-bottom:40px;font-style:italic;
+  }
+  .copyright .greek{color:var(--gold);opacity:.7;font-size:1rem;}
+
+  /* ============ reveal-on-scroll ============ */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .9s var(--ease),transform .9s var(--ease);}
+  .reveal.in{opacity:1;transform:none;}
+  @media (prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none;}
+    html{scroll-behavior:auto;}
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width:900px){
+    .cards{grid-template-columns:1fr;}
+    .components-grid{grid-template-columns:1fr;}
+    .capsule{padding:38px 28px;}
+    .nav-links{gap:14px;}
+    .nav-links a{font-size:.6rem;letter-spacing:.14em;}
+    .nav-links a.ghost{padding:7px 12px;}
+    .section-pad{padding:74px 0;}
+    .manifesto{padding:88px 0;}
+  }
+  @media (max-width:560px){
+    .wrap{padding:0 20px;}
+    .hero{padding:40px 0 64px;}
+    .specs{grid-template-columns:1fr;}
+    .capsule{padding:32px 22px;}
+    .cta-row .btn{width:100%;justify-content:center;}
+    .foot-inner{flex-direction:column;text-align:center;justify-content:center;}
+  }
+</style>
+</head>
+<body>
+
+  <!-- top meander band -->
+  <div class="topband"><div class="meander"></div></div>
+
+  <!-- NAV -->
+  <header class="nav">
+    <div class="wrap">
+      <div class="nav-inner">
+        <a class="brandmark" href="#top">JOY<span class="v">VEND</span></a>
+        <nav class="nav-links">
+          <a href="#mission">How it works</a>
+          <a href="#components">Suite</a>
+          <a href="#ethos">Why local</a>
+          <a class="ghost" href="https://github.com/lexxx233/JoyVend-memory-capsule" target="_blank" rel="noopener">GitHub</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="hero-glow"></div>
+
+    <div class="wrap hero-inner">
+      <h1 class="wordmark reveal"><span class="joy">JOY</span><span class="vend">VEND</span></h1>
+      <div class="wordmark-rule reveal"></div>
+
+      <h2 class="hero-headline reveal">Advanced local tools for <em>any</em> AI agent.</h2>
+      <p class="hero-sub reveal">A portable suite of capabilities that make any AI agent <em>yours</em> — your memory, your tools, your keys — all sealed on a USB stick. No cloud, no install, no lock-in.</p>
+
+      <div class="creed reveal">
+        <span>Personal</span><span>Private</span><span>Portable</span>
+      </div>
+
+      <div class="cta-row reveal">
+        <a class="btn btn-gold" href="#components">Explore the suite</a>
+        <a class="btn btn-ghost" href="https://github.com/lexxx233/JoyVend-memory-capsule" target="_blank" rel="noopener">View the Capsule</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MISSION -->
+  <section class="mission section-pad" id="mission">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">How it works</p>
+        <h2 class="section-title">You bring the agent. joyvend brings the capabilities.</h2>
+        <p class="section-lede">joyvend has no AI of its own. Your agent — Claude Code, Cursor, or anything that can call a local API — does the thinking; joyvend hands it advanced capabilities it doesn't ship with, over a loopback connection on the stick. Your memory, your tools, your keys: a stock agent becomes <em>yours</em> — on any machine, owned and private.</p>
+      </div>
+
+      <div class="divider reveal" style="margin-bottom:54px;">
+        <span class="meander-rule"></span><span class="glyph">❖</span><span class="meander-rule"></span>
+      </div>
+
+      <div class="cards">
+        <article class="card reveal">
+          <svg class="glyph" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M24 4 L40 11 V22 C40 33 33 41 24 44 C15 41 8 33 8 22 V11 Z"/>
+            <path d="M24 22 m-5 0 a5 5 0 1 0 10 0 a5 5 0 1 0 -10 0"/>
+            <path d="M24 27 V34"/>
+          </svg>
+          <h3>Private by design</h3>
+          <p>Everything runs on the stick — no cloud round-trips, no telemetry, no accounts. Each capability and its data are encrypted at rest; lose the stick and a thief gets only ciphertext.</p>
+        </article>
+
+        <article class="card reveal">
+          <svg class="glyph" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <rect x="9" y="8" width="30" height="22" rx="2"/>
+            <path d="M9 24 H39"/>
+            <path d="M18 36 H30 M16 40 H32"/>
+            <circle cx="24" cy="16" r="3.4"/>
+          </svg>
+          <h3>Works with any agent</h3>
+          <p>Any client that can make a local HTTP call plugs in — Claude Code, Cursor, custom agents. A pasted snippet is the whole integration: no SDK, no plugin, no MCP.</p>
+        </article>
+
+        <article class="card reveal">
+          <svg class="glyph" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <rect x="14" y="21" width="20" height="18" rx="2"/>
+            <path d="M18 21 V15 A6 6 0 0 1 30 15 V21"/>
+            <circle cx="24" cy="29" r="2.4"/><path d="M24 31.4 V34"/>
+          </svg>
+          <h3>Carry it anywhere</h3>
+          <p>A USB stick is the whole platform. Binaries, config, and data live on the drive — plug into Windows, macOS, or Linux and your agent's powers travel with you. No installer, no lock-in.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPONENTS -->
+  <section class="components section-pad" id="components">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">The Suite</p>
+        <h2 class="section-title">A growing kit of local capabilities</h2>
+        <p class="section-lede">Each component is a self-contained capability any agent can use — all on the stick, all from Domu. Together they make a stock agent <em>yours</em>: the Memory Capsule (it knows you) shipped first; the Tool Forge (it does more) and Key Vault (it acts as you) are next.</p>
+      </div>
+
+      <div class="components-grid">
+        <!-- Memory Capsule -->
+        <article class="capsule reveal">
+          <div class="cap-meander meander"></div>
+          <span class="cap-badge"><span class="dot"></span>Shipped · v1 core</span>
+          <h3>Memory Capsule</h3>
+          <p class="kicker">A portable, encrypted memory store for AI agents.</p>
+          <p class="lede">A pure-Go binary and a single encrypted file you carry on a USB stick. Plug it into any machine — Windows, macOS, Linux — and your agent's memory travels with you, never the cloud.</p>
+
+          <ul class="specs">
+            <li><b>Whole-DB encryption</b><br><span>AES-256-GCM, sealed at rest</span></li>
+            <li><b>Local CPU embeddings</b><br><span>bge-small, no network, no GPU</span></li>
+            <li><b>Semantic + keyword recall</b><br><span>vector KNN fused with BM25</span></li>
+            <li><b>Pure Go, zero CGo</b><br><span>one static binary, six targets</span></li>
+          </ul>
+
+          <div class="cap-cta">
+            <a class="repo-link" href="https://github.com/lexxx233/JoyVend-memory-capsule" target="_blank" rel="noopener">
+              <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.4 7.4 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+              Open on GitHub
+            </a>
+            <span class="stack-note">Apache-licensed · runs from a USB stick</span>
+          </div>
+        </article>
+
+        <!-- More to come -->
+        <article class="comingsoon reveal">
+          <p class="tag">Coming next</p>
+          <h4>More capabilities</h4>
+          <p><b style="color:var(--gold-bright)">Tool Forge</b> — a local server for plug-and-play skills &amp; tools any agent loads off the stick.</p>
+          <p style="margin-top:14px"><b style="color:var(--gold-bright)">Key Vault</b> — your API keys, encrypted on the stick, so the agent can act <em>as you</em> — keys never touch the cloud.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- MANIFESTO -->
+  <section class="manifesto" id="ethos">
+    <div class="wrap">
+      <blockquote class="quote reveal">
+        “The powers your AI relies on should belong to <span class="gold">you</span> — running on hardware you hold, owing nothing to the cloud, answering to no one else.”
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="meander"></div>
+    <div class="wrap">
+      <div class="foot-inner">
+        <a class="foot-brand" href="#top">JOY<span class="v">VEND</span></a>
+        <nav class="foot-links">
+          <a href="#mission">How it works</a>
+          <a href="#components">Suite</a>
+          <a href="#ethos">Why local</a>
+          <a href="https://github.com/lexxx233/JoyVend-memory-capsule" target="_blank" rel="noopener">GitHub</a>
+        </nav>
+      </div>
+      <p class="copyright">© 2026 Domu Inc. &nbsp;·&nbsp; local, private, and yours.</p>
+    </div>
+  </footer>
+
+  <script>
+    // gentle reveal-on-scroll — purely decorative, content is visible without JS
+    (function () {
+      var els = document.querySelectorAll('.reveal');
+      if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        els.forEach(function (e) { e.classList.add('in'); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+      els.forEach(function (e) { io.observe(e); });
+    })();
+  </script>
+
+</body>
+</html>
