@@ -3,8 +3,8 @@
 The umbrella landing page for **joyvend**: a portable suite of local capabilities that any AI agent
 can plug into — advanced tools that live on a USB stick, no cloud, no install. Static, dependency-free
 (`index.html` only). The [Memory Capsule](https://github.com/lexxx233/JoyVend-memory-capsule) (encrypted,
-portable memory) is the first component; a **Tool Forge** (a local server for plug-and-play skills/tools)
-is next.
+portable memory) is the first component; a **Foundry** (a local server for plug-and-play skills/tools
+plus the infrastructure they run on — database, queue, cache, storage) is next.
 
 ## Host on Cloudflare Pages
 
