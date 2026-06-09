@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>mykeep — portable AI capabilities, on a USB drive</title>
-<meta name="description" content="mykeep is a portable suite of capabilities — memory, keys, a browser, tools — that any AI agent plugs into over a loopback API. One drive, any machine. No cloud, no install, no lock-in.">
+<meta name="description" content="mykeep is a portable suite of capabilities — memory, keys, a browser, tools — that any AI agent plugs into right on your machine. One drive, any computer. No cloud, no install, no lock-in.">
 <meta name="theme-color" content="#0a0a0b">
 <meta property="og:title" content="mykeep — portable AI capabilities, on a USB drive">
 <meta property="og:description" content="A portable suite of capabilities for any AI agent — memory, keys, a browser, tools — on a USB drive. Secured, private, portable.">
@@ -323,7 +323,7 @@
         </svg>
       </div>
       <h1 class="headline reveal">Portable AI capabilities, on a <span class="accent">USB drive</span> — or anywhere you choose.</h1>
-      <p class="lede reveal">Memory, keys, a browser, tools — capabilities any AI agent plugs into over a loopback API. Each is one binary and one encrypted file, on a drive you carry.</p>
+      <p class="lede reveal">Memory, keys, a browser, tools — capabilities any AI agent plugs into with a simple connection on your own machine. Each is a single encrypted file you carry.</p>
       <p class="lede reveal">Plug it into <b>any machine</b> — Windows, macOS, Linux — and your agent's capabilities come with it. No cloud, no install, no lock-in.</p>
 
       <div class="cta-row reveal">
@@ -337,12 +337,12 @@
       <div class="terminal reveal" aria-hidden="true">
         <div class="term-bar"><span class="b"></span><span class="b"></span><span class="b"></span><span class="t">~/usb/mykeep</span></div>
         <div class="term-body"><span class="pr">$</span> ./mykeep serve
-<span class="ok">  ✓</span> <span class="nm">capsule  </span> <span class="cm">memory   — encrypted, semantic + keyword recall</span>
-<span class="ok">  ✓</span> <span class="nm">vault    </span> <span class="cm">keys     — authenticated calls by reference</span>
-<span class="ok">  ✓</span> <span class="nm">showstone</span> <span class="cm">browser  — a real Chromium it drives</span>
-<span class="ok">  ✓</span> <span class="nm">foundry  </span> <span class="cm">tools    — JavaScript in a WASM sandbox</span>
+<span class="ok">  ✓</span> <span class="nm">capsule  </span> <span class="cm">memory   — searchable, encrypted</span>
+<span class="ok">  ✓</span> <span class="nm">vault    </span> <span class="cm">keys     — used without ever exposing them</span>
+<span class="ok">  ✓</span> <span class="nm">showstone</span> <span class="cm">browser  — a real browser it drives</span>
+<span class="ok">  ✓</span> <span class="nm">foundry  </span> <span class="cm">tools    — safe little JavaScript programs</span>
 
-  <span class="ar">→</span> http://127.0.0.1:8765  <span class="cm">(loopback · any agent plugs in)</span></div>
+  <span class="ar">→</span> http://127.0.0.1:8765  <span class="cm">(on your machine · any agent plugs in)</span></div>
       </div>
     </div>
   </section>
@@ -353,24 +353,24 @@
       <div class="section-head reveal">
         <p class="eyebrow">How it works</p>
         <h2 class="section-title">You bring the agent. mykeep brings the capabilities.</h2>
-        <p class="section-lede">mykeep has no AI of its own. Your agent does the thinking — Claude Code, Cursor, anything that calls a local API. mykeep hands it capabilities it doesn't ship with, so a stock agent becomes <b>yours</b>, on any machine — private and secured.</p>
+        <p class="section-lede">mykeep has no AI of its own. Your agent does the thinking — Claude Code, Cursor, anything that can make a web request on your machine. mykeep gives it capabilities it doesn't come with, so an everyday agent becomes <b>yours</b>, on any computer — private and secured.</p>
       </div>
 
       <div class="grid3">
         <article class="feat reveal">
           <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 19 5.5V11c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V5.5Z"/><path d="m9 12 2 2 4-4"/></svg></span>
           <h3>Secure by design</h3>
-          <p>Everything runs on the drive — no cloud, no telemetry, no accounts. Data is encrypted at rest and the control planes stay loopback-only; lose the drive and a thief gets ciphertext.</p>
+          <p>Everything runs on the drive — no cloud, no tracking, no accounts. Your data is encrypted, and the parts that manage it never leave your machine; lose the drive and a thief gets only scrambled, unreadable files.</p>
         </article>
         <article class="feat reveal">
           <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17V7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="m8 9 2 2-2 2"/><path d="M13 13h3"/></svg></span>
           <h3>Works with any agent</h3>
-          <p>Any client that makes a local HTTP call plugs in — Claude Code, Cursor, custom agents. A pasted snippet is the whole integration: no SDK, no plugin, no MCP.</p>
+          <p>Any app that can make a web request plugs in — Claude Code, Cursor, your own scripts. Paste one snippet and you're connected — no SDK, no plugin, nothing to install.</p>
         </article>
         <article class="feat reveal">
           <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="10" width="10" height="9" rx="1.5"/><path d="M9 10V7.5a3 3 0 0 1 6 0V10"/><path d="M12 14v2"/></svg></span>
           <h3>Carry it anywhere</h3>
-          <p>The drive is the whole platform — binaries, config, and data live on it. Plug into Windows, macOS, or Linux; pure-Go static binaries mean no installer, no runtime.</p>
+          <p>The drive holds everything — the programs, settings, and data. Move it between Windows, macOS, and Linux; each one is a single file that just runs — no installer, nothing to set up.</p>
         </article>
       </div>
     </div>
@@ -381,34 +381,34 @@
     <div class="wrap">
       <div class="section-head reveal">
         <p class="eyebrow">The suite</p>
-        <h2 class="section-title">Four capabilities, one binary.</h2>
-        <p class="section-lede">Run any component on its own, or the whole suite behind <b>one password</b>. Pure-Go, MIT-licensed, shipping today.</p>
+        <h2 class="section-title">Four capabilities, one file.</h2>
+        <p class="section-lede">Use any component on its own, or the whole suite behind <b>one password</b>. Open source (MIT), and ready to use today.</p>
       </div>
 
       <div class="comp-list reveal">
         <a class="comp-row" href="https://github.com/lexxx233/mykeep-capsule" target="_blank" rel="noopener">
           <span class="cr-name">Capsule</span><span class="cr-role">memory</span>
-          <span class="cr-desc">encrypted recall — semantic + keyword, never the cloud</span>
+          <span class="cr-desc">long-term memory it can search — encrypted, never the cloud</span>
           <span class="cr-gh">GitHub ↗</span>
         </a>
         <a class="comp-row" href="https://github.com/lexxx233/mykeep-vault" target="_blank" rel="noopener">
           <span class="cr-name">Vault</span><span class="cr-role">keys</span>
-          <span class="cr-desc">authenticated calls by reference — the secret stays sealed</span>
+          <span class="cr-desc">uses your API keys without ever seeing them</span>
           <span class="cr-gh">GitHub ↗</span>
         </a>
         <a class="comp-row" href="https://github.com/lexxx233/mykeep-showstone" target="_blank" rel="noopener">
           <span class="cr-name">Showstone</span><span class="cr-role">browser</span>
-          <span class="cr-desc">a real Chromium your agent drives, behind an approval gate</span>
+          <span class="cr-desc">a real web browser it drives — you approve anything risky</span>
           <span class="cr-gh">GitHub ↗</span>
         </a>
         <a class="comp-row" href="https://github.com/lexxx233/mykeep-foundry" target="_blank" rel="noopener">
           <span class="cr-name">Foundry</span><span class="cr-role">tools</span>
-          <span class="cr-desc">sandboxed JavaScript tools + a signed marketplace</span>
+          <span class="cr-desc">small JavaScript tools that run safely, plus a marketplace</span>
           <span class="cr-gh">GitHub ↗</span>
         </a>
       </div>
 
-      <p class="suite-foot reveal">Want everything at once? The <a href="https://github.com/lexxx233/mykeep" target="_blank" rel="noopener">mykeep suite</a> bundles all four into one binary and one unlock — also MIT-licensed.</p>
+      <p class="suite-foot reveal">Want everything at once? The <a href="https://github.com/lexxx233/mykeep" target="_blank" rel="noopener">mykeep suite</a> bundles all four into one file and one unlock — also MIT-licensed.</p>
     </div>
   </section>
 
@@ -418,16 +418,16 @@
       <div class="section-head reveal">
         <p class="eyebrow">Quick start</p>
         <h2 class="section-title">Running in two steps.</h2>
-        <p class="section-lede">No installer, no setup. Run the binary from the drive, then paste one line into your agent.</p>
+        <p class="section-lede">No installer, no setup. Run one file from the drive, then paste one line into your agent.</p>
       </div>
       <div class="steps reveal">
         <div class="step">
           <span class="num">1</span>
-          <div><b>Run it from the drive.</b><p>First launch creates your password, then serves on loopback.</p><code>$ ./mykeep serve  →  http://127.0.0.1:8765</code></div>
+          <div><b>Run it from the drive.</b><p>The first launch sets your password, then it runs locally on your machine.</p><code>$ ./mykeep serve  →  http://127.0.0.1:8765</code></div>
         </div>
         <div class="step">
           <span class="num">2</span>
-          <div><b>Paste the guide URL into your agent.</b><p>Claude Code, Cursor, anything with an HTTP tool — it reads the manual and starts using your memory, keys, browser, and tools.</p><code>GET http://127.0.0.1:8765/v1/capsule/guide</code></div>
+          <div><b>Paste the guide URL into your agent.</b><p>Claude Code, Cursor, anything that can fetch a URL — it reads the manual and starts using your memory, keys, browser, and tools.</p><code>GET http://127.0.0.1:8765/v1/capsule/guide</code></div>
         </div>
       </div>
     </div>
@@ -439,7 +439,7 @@
       <div class="section-head reveal">
         <p class="eyebrow">Marketplace</p>
         <h2 class="section-title">A tool is a few lines of JavaScript.</h2>
-        <p class="section-lede">No SDK, no build step. Write an <code>async run(input)</code> and call the <code>foundry</code> API for storage, HTTP, and authenticated requests. It runs in a WebAssembly sandbox with only the capabilities you grant, so untrusted code stays contained — then ship it to a signed, reviewed marketplace.</p>
+        <p class="section-lede">No setup, no build step. Write a short JavaScript function and call the <code>foundry</code> API for storage, web requests, and signed-in actions. It runs in an isolated sandbox with only the permissions you grant — so even untrusted code can't escape — then publish it to the marketplace, where every tool is reviewed and signed.</p>
       </div>
 
       <div class="mk-split">
@@ -459,13 +459,13 @@
         </div>
 
         <div class="mk-points reveal">
-          <div class="mk-point"><h3>Just JavaScript</h3><p>The <code>foundry</code> global is the whole API — kv, queue, cache, blobs, brokered HTTP, Vault by reference, logs. No SDK, no plugin to install.</p></div>
-          <div class="mk-point"><h3>Sandboxed &amp; scoped</h3><p>Each tool runs in a WebAssembly sandbox under hard time and memory limits, reaching only the hosts and credentials a human grants it.</p></div>
-          <div class="mk-point"><h3>Reviewed &amp; signed</h3><p>Submit it and an AI reviewer screens the source; accepted tools are ed25519-signed and install on demand, verified against a pinned key.</p></div>
+          <div class="mk-point"><h3>Just JavaScript</h3><p>The <code>foundry</code> global is the whole API — storage, queues, caching, files, web requests, and your saved keys. Nothing to install.</p></div>
+          <div class="mk-point"><h3>Sandboxed &amp; scoped</h3><p>Each tool runs in an isolated sandbox with strict time and memory limits, and can only reach the sites and keys you allow.</p></div>
+          <div class="mk-point"><h3>Reviewed &amp; signed</h3><p>Submit it and an AI reviewer checks the code for anything sketchy. Approved tools are cryptographically signed, so what you install is exactly what was reviewed.</p></div>
         </div>
       </div>
 
-      <p class="suite-foot reveal">The full host API and tool format live in <a href="https://github.com/lexxx233/mykeep-foundry" target="_blank" rel="noopener">Foundry</a> — write a tool, grant it capabilities, ship your first one.</p>
+      <p class="suite-foot reveal">The full API and tool format live in <a href="https://github.com/lexxx233/mykeep-foundry" target="_blank" rel="noopener">Foundry</a> — write a tool, grant it permissions, ship your first one.</p>
     </div>
   </section>
 
