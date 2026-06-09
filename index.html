@@ -195,14 +195,6 @@
     position:relative;transition:border-color .25s var(--ease),transform .25s var(--ease),box-shadow .25s var(--ease);
   }
   .comp:hover{border-color:var(--line-2);transform:translateY(-3px);box-shadow:0 18px 44px rgba(0,0,0,.34);}
-  .comp-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
-  .badge{
-    display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);
-    font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
-    border:1px solid var(--line);border-radius:999px;padding:4px 10px;
-  }
-  .badge.ship{color:var(--ship);border-color:var(--ship-soft);background:var(--ship-soft);}
-  .badge .d{width:6px;height:6px;border-radius:50%;background:currentColor;}
   .comp h3{font-size:1.45rem;font-weight:650;letter-spacing:-.015em;margin:0 0 6px;color:var(--text);}
   .comp .role{font-family:var(--mono);font-size:.8rem;color:var(--accent);margin:0 0 14px;}
   .comp .desc{margin:0 0 18px;color:var(--muted);font-size:.96rem;line-height:1.6;}
@@ -288,7 +280,7 @@
   <!-- HERO -->
   <section class="hero" id="top">
     <div class="wrap">
-      <span class="pill reveal"><span class="dot"></span>Four capabilities <b>shipped</b> — Capsule, Vault, Showstone, Foundry</span>
+      <span class="pill reveal"><span class="dot"></span>Four local capabilities — Capsule, Vault, Showstone, Foundry</span>
       <h1 class="headline reveal">Local AI capabilities, on a <span class="accent">USB stick</span>.</h1>
       <p class="lede reveal">mykeep is a portable suite of local capabilities — <b>memory, keys, a browser, tools</b> — that any AI agent plugs into over a loopback API. One binary and an encrypted file per capability, on a drive you carry.</p>
       <p class="lede reveal">Plug the stick into <b>any machine</b> — Windows, macOS, Linux — and your agent's powers travel with it. No cloud, no install, no lock-in.</p>
@@ -356,10 +348,6 @@
       <div class="suite-grid">
         <!-- Capsule -->
         <article class="comp reveal">
-          <div class="comp-top">
-            <span class="badge ship"><span class="d"></span>Shipped · v1</span>
-            <span class="meta-note">it knows you</span>
-          </div>
           <h3>Capsule</h3>
           <p class="role">portable encrypted memory</p>
           <p class="desc">A single encrypted file you carry on the stick. Plug it into any machine and your agent's memory travels with you — semantic + keyword recall, never the cloud.</p>
@@ -379,10 +367,6 @@
 
         <!-- Vault -->
         <article class="comp reveal">
-          <div class="comp-top">
-            <span class="badge ship"><span class="d"></span>Shipped · v1</span>
-            <span class="meta-note">it acts as you</span>
-          </div>
           <h3>Vault</h3>
           <p class="role">a by-reference secrets broker</p>
           <p class="desc">Your API keys live encrypted beside your memory. The agent makes authenticated calls <em>by reference</em> through a local broker, so the raw secret never reaches the model or the cloud.</p>
@@ -402,10 +386,6 @@
 
         <!-- Showstone -->
         <article class="comp reveal">
-          <div class="comp-top">
-            <span class="badge ship"><span class="d"></span>Shipped · v1</span>
-            <span class="meta-note">it sees the web</span>
-          </div>
           <h3>Showstone</h3>
           <p class="role">a portable browser it drives</p>
           <p class="desc">A real Chromium your agent drives over a loopback REST API — reads pages as compact text, acts on numbered elements, and screenshots on demand. Sensitive actions block for your approval.</p>
@@ -425,10 +405,6 @@
 
         <!-- Foundry -->
         <article class="comp reveal">
-          <div class="comp-top">
-            <span class="badge ship"><span class="d"></span>Shipped · v1</span>
-            <span class="meta-note">it does more</span>
-          </div>
           <h3>Foundry</h3>
           <p class="role">a sandboxed tool host</p>
           <p class="desc">Runs tools — JavaScript in a WebAssembly sandbox — with only the capabilities you grant. It gives them an encrypted backend (kv, queue, cache, blobs) and a signed marketplace to install from.</p>
