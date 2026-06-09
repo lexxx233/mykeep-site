@@ -10,7 +10,7 @@
 <meta property="og:description" content="A portable suite of capabilities for any AI agent — memory, keys, a browser, tools — on a USB stick. Private, personal, portable.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://mykeep.ai">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230a0a0b'/%3E%3Crect x='1' y='1' width='30' height='30' rx='7' fill='none' stroke='%235e9eff' stroke-opacity='.6'/%3E%3Ctext x='16' y='22' font-family='ui-monospace,Menlo,monospace' font-size='18' font-weight='600' text-anchor='middle' fill='%23ededef'%3Em%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3CradialGradient id='g' cx='40%25' cy='36%25' r='70%25'%3E%3Cstop offset='0%25' stop-color='%23bcd6ff'/%3E%3Cstop offset='100%25' stop-color='%235e9eff'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='%230a0a0b'/%3E%3Ccircle cx='16' cy='16' r='9' fill='url(%23g)'/%3E%3C/svg%3E">
 <style>
   :root{
     --bg:#0a0a0b;
@@ -79,11 +79,20 @@
     font-family:var(--mono);font-weight:600;font-size:1.02rem;letter-spacing:-.01em;
     color:var(--text);display:inline-flex;align-items:center;gap:9px;
   }
-  .brandmark .sq{
-    width:22px;height:22px;border-radius:6px;border:1px solid var(--accent-line);
-    display:grid;place-items:center;font-size:.82rem;color:var(--text);
-    background:var(--accent-soft);
-  }
+  /* ---- animated blob logo: a living orb with lights drifting inside (gooey metaballs) ---- */
+  .hero-logo{width:clamp(116px,16vw,164px);margin:0 auto 32px;filter:drop-shadow(0 0 34px rgba(94,158,255,.5)) drop-shadow(0 0 10px rgba(94,158,255,.4));}
+  .hero-logo svg{width:100%;height:auto;display:block;}
+  .mk-blob{transform-box:fill-box;transform-origin:50% 50%;animation:mkBreathe 7s ease-in-out infinite;}
+  .mk-g{transform-box:fill-box;transform-origin:50% 50%;}
+  .mk-g1{animation:mkA 6s ease-in-out infinite;}
+  .mk-g2{animation:mkB 7.5s ease-in-out infinite;}
+  .mk-g3{animation:mkC 5.5s ease-in-out infinite;}
+  .mk-g4{animation:mkD 8.5s ease-in-out infinite;}
+  @keyframes mkBreathe{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+  @keyframes mkA{0%,100%{transform:translate(-7px,5px)}50%{transform:translate(8px,-8px)}}
+  @keyframes mkB{0%,100%{transform:translate(7px,7px)}50%{transform:translate(-8px,-4px)}}
+  @keyframes mkC{0%,100%{transform:translate(4px,-8px)}50%{transform:translate(-6px,9px)}}
+  @keyframes mkD{0%,100%{transform:translate(-8px,-6px)}50%{transform:translate(9px,6px)}}
   .nav-links{display:flex;gap:6px;align-items:center;}
   .nav-links a{
     font-size:.86rem;color:var(--muted);font-weight:450;
@@ -98,35 +107,28 @@
   .nav-links a.ghost svg{width:15px;height:15px;}
 
   /* ============ HERO ============ */
-  .hero{padding:104px 0 72px;}
-  .pill{
-    display:inline-flex;align-items:center;gap:9px;
-    font-family:var(--mono);font-size:.74rem;letter-spacing:.02em;color:var(--muted);
-    border:1px solid var(--line);border-radius:999px;padding:6px 13px;margin-bottom:30px;
-    background:var(--panel);
-  }
-  .pill .dot{width:7px;height:7px;border-radius:50%;background:var(--ship);box-shadow:0 0 0 3px var(--ship-soft);}
-  .pill b{color:var(--text);font-weight:600;}
+  .hero{padding:96px 0 72px;}
+  .hero .wrap{text-align:center;}
 
   h1.headline{
     font-size:clamp(2.5rem,6.2vw,4.35rem);
     line-height:1.04;letter-spacing:-.025em;font-weight:680;
-    margin:0 0 24px;max-width:15ch;color:var(--text);
+    margin:0 auto 24px;max-width:16ch;color:var(--text);
   }
   h1.headline .accent{color:var(--accent);}
   .lede{
     font-size:clamp(1.08rem,1.6vw,1.28rem);
-    color:var(--muted);max-width:54ch;margin:0 0 18px;line-height:1.6;
+    color:var(--muted);max-width:54ch;margin:0 auto 18px;line-height:1.6;
   }
   .lede b{color:var(--text);font-weight:600;}
   .creed{
-    display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center;
+    display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center;justify-content:center;
     font-family:var(--mono);font-size:.76rem;color:var(--faint);margin:0 0 36px;
   }
   .creed span{color:var(--muted);}
   .creed i{color:var(--line-2);font-style:normal;}
 
-  .cta-row{display:flex;gap:12px;flex-wrap:wrap;align-items:center;}
+  .cta-row{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:center;}
   .btn{
     font-size:.92rem;font-weight:550;border-radius:9px;padding:12px 20px;
     display:inline-flex;align-items:center;gap:9px;cursor:pointer;border:1px solid transparent;
@@ -140,10 +142,10 @@
 
   /* ---- hero terminal ---- */
   .terminal{
-    margin-top:54px;border:1px solid var(--line);border-radius:12px;overflow:hidden;
+    margin:54px auto 0;border:1px solid var(--line);border-radius:12px;overflow:hidden;
     background:linear-gradient(180deg,var(--panel-2),var(--panel));
     box-shadow:0 24px 70px rgba(0,0,0,.45);
-    max-width:680px;
+    max-width:680px;text-align:left;
   }
   .term-bar{
     display:flex;align-items:center;gap:8px;padding:11px 15px;border-bottom:1px solid var(--line);
@@ -240,6 +242,7 @@
   .reveal.in{opacity:1;transform:none;}
   @media (prefers-reduced-motion:reduce){
     .reveal{opacity:1;transform:none;transition:none;}
+    .mk-blob,.mk-g{animation:none;}
     html{scroll-behavior:auto;}
   }
 
@@ -264,7 +267,7 @@
   <!-- NAV -->
   <header class="nav">
     <div class="wrap nav-inner">
-      <a class="brandmark" href="#top"><span class="sq mono">m</span>mykeep</a>
+      <a class="brandmark" href="#top">mykeep</a>
       <nav class="nav-links">
         <a href="#how">How it works</a>
         <a href="#suite">Suite</a>
@@ -280,7 +283,28 @@
   <!-- HERO -->
   <section class="hero" id="top">
     <div class="wrap">
-      <span class="pill reveal"><span class="dot"></span>Four portable capabilities — Capsule, Vault, Showstone, Foundry</span>
+      <div class="hero-logo reveal" aria-hidden="true">
+        <svg viewBox="0 0 100 100">
+          <defs>
+            <filter id="mkGoo">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="b"/>
+              <feColorMatrix in="b" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -9"/>
+            </filter>
+            <radialGradient id="mkBlob" cx="40%" cy="36%" r="70%">
+              <stop offset="0%" stop-color="#bcd6ff"/>
+              <stop offset="55%" stop-color="#5e9eff"/>
+              <stop offset="100%" stop-color="#3f74d6"/>
+            </radialGradient>
+          </defs>
+          <g filter="url(#mkGoo)">
+            <circle class="mk-blob" cx="50" cy="50" r="30" fill="url(#mkBlob)"/>
+            <circle class="mk-g mk-g1" cx="50" cy="50" r="9" fill="#e6f0ff"/>
+            <circle class="mk-g mk-g2" cx="50" cy="50" r="7" fill="#bcd6ff"/>
+            <circle class="mk-g mk-g3" cx="50" cy="50" r="6" fill="#ffffff"/>
+            <circle class="mk-g mk-g4" cx="50" cy="50" r="7" fill="#9fc2ff"/>
+          </g>
+        </svg>
+      </div>
       <h1 class="headline reveal">Portable AI capabilities, on a <span class="accent">USB stick</span>.</h1>
       <p class="lede reveal">mykeep is a portable suite of capabilities — <b>memory, keys, a browser, tools</b> — that any AI agent plugs into over a loopback API. One binary and an encrypted file per capability, on a drive you carry.</p>
       <p class="lede reveal">Plug the stick into <b>any machine</b> — Windows, macOS, Linux — and your agent's powers travel with it. No cloud, no install, no lock-in.</p>
