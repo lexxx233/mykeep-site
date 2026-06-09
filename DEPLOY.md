@@ -2,7 +2,7 @@
 
 The umbrella landing page for **mykeep**: a portable suite of local capabilities that any AI agent
 can plug into — advanced tools that live on a USB stick, no cloud, no install. Static, dependency-free
-(`index.html` only). The [Memory Capsule](https://github.com/lexxx233/mykeep-memory-capsule) (encrypted,
+(`index.html` only). The [Capsule](https://github.com/lexxx233/mykeep-capsule) (encrypted,
 portable memory) is the first component; a **Foundry** (a local server for plug-and-play skills/tools
 plus the infrastructure they run on — database, queue, cache, storage) is next.
 
