@@ -4,32 +4,32 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>mykeep — local AI capabilities, on a USB stick</title>
-<meta name="description" content="mykeep is a portable suite of local capabilities — memory, tools, keys — that make any AI agent yours. Private, personal, carried on a USB stick. No cloud, no install.">
-<meta name="theme-color" content="#0c2438">
+<meta name="description" content="mykeep is a portable suite of local capabilities — memory, keys, a browser — that any AI agent plugs into over a loopback API. One stick, any machine. No cloud, no install, no lock-in.">
+<meta name="theme-color" content="#0a0a0b">
 <meta property="og:title" content="mykeep — local AI capabilities, on a USB stick">
-<meta property="og:description" content="A portable suite of capabilities that make any AI agent yours — memory, tools, keys, sealed on a USB stick. Private, personal, portable.">
+<meta property="og:description" content="A portable suite of capabilities that make any AI agent yours — memory, keys, a browser — sealed on a USB stick. Private, personal, portable.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://mykeep.ai">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230c2438'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' font-weight='700' text-anchor='middle' fill='%23c9a24b'%3Em%3C/text%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cardo:ital@0;1&family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230a0a0b'/%3E%3Crect x='1' y='1' width='30' height='30' rx='7' fill='none' stroke='%235e9eff' stroke-opacity='.6'/%3E%3Ctext x='16' y='22' font-family='ui-monospace,Menlo,monospace' font-size='18' font-weight='600' text-anchor='middle' fill='%23ededef'%3Em%3C/text%3E%3C/svg%3E">
 <style>
   :root{
-    --aegean-deep:#0c2438;
-    --aegean:#0f2c43;
-    --aegean-2:#14385a;
-    --aegean-lift:#1b466e;
-    --marble:#eee7d7;
-    --marble-soft:#e2d8c2;
-    --gold:#c9a24b;
-    --gold-bright:#e0c074;
-    --gold-deep:#9c7a32;
-    --ink:#0a1c2c;
-    --mist:rgba(238,231,215,.72);
-    --mist-faint:rgba(238,231,215,.62);
-    --hair:rgba(201,162,75,.55);
-    --maxw:1160px;
+    --bg:#0a0a0b;
+    --bg-soft:#0e0e10;
+    --panel:#121214;
+    --panel-2:#161619;
+    --line:rgba(255,255,255,.09);
+    --line-2:rgba(255,255,255,.16);
+    --text:#ededf0;
+    --muted:#9a9aa4;
+    --faint:#6b6b75;
+    --accent:#5e9eff;
+    --accent-soft:rgba(94,158,255,.14);
+    --accent-line:rgba(94,158,255,.4);
+    --ship:#46c266;
+    --ship-soft:rgba(70,194,102,.14);
+    --maxw:1080px;
+    --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
     --ease:cubic-bezier(.22,.61,.36,1);
   }
 
@@ -37,651 +37,449 @@
   html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
   body{
     margin:0;
-    background:var(--aegean-deep);
-    color:var(--marble);
-    font-family:'EB Garamond',Georgia,serif;
-    font-size:clamp(17px,1.05vw + 13px,20px);
-    line-height:1.72;
-    letter-spacing:.1px;
-    overflow-x:hidden;
-    text-rendering:optimizeLegibility;
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    font-size:16px;
+    line-height:1.65;
     -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    overflow-x:hidden;
   }
-
-  /* ---- atmospheric backdrop: aegean depth, soft golden glow, faint star-marble grain ---- */
+  /* a single faint cool wash up top, nothing more */
   body::before{
-    content:"";
-    position:fixed;inset:0;z-index:-3;
+    content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
     background:
-      radial-gradient(120% 80% at 50% -10%, rgba(224,192,116,.16) 0%, rgba(224,192,116,0) 46%),
-      radial-gradient(95% 70% at 50% 30%, rgba(27,70,110,.55) 0%, rgba(15,44,67,0) 70%),
-      linear-gradient(180deg, #0e2840 0%, #0c2438 38%, #091d2f 100%);
-  }
-  body::after{
-    content:"";
-    position:fixed;inset:0;z-index:-2;pointer-events:none;
-    opacity:.05;
-    background-image:radial-gradient(rgba(238,231,215,.9) .5px, transparent .5px);
-    background-size:3px 3px;
-    mix-blend-mode:screen;
+      radial-gradient(80% 50% at 50% -10%, rgba(94,158,255,.08), transparent 70%),
+      linear-gradient(180deg,#0b0b0d 0%, var(--bg) 40%);
   }
 
   a{color:inherit;text-decoration:none;}
-  img,svg{display:block;max-width:100%;}
+  svg{display:block;}
+  ::selection{background:var(--accent-soft);}
 
-  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
+  .mono{font-family:var(--mono);}
 
-  /* ---- inscriptional display caps ---- */
-  .cinzel{font-family:'Cinzel',serif;}
   .eyebrow{
-    font-family:'Cinzel',serif;
-    font-size:.72rem;
-    letter-spacing:.32em;
-    text-transform:uppercase;
-    color:var(--gold-bright);
-    font-weight:500;
-    margin:0;
+    font-family:var(--mono);
+    font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--accent);margin:0 0 18px;font-weight:500;
   }
-
-  /* ---- meander (greek key): ONE continuous unicursal key, reused at both scales ---- */
-  /* tile: 16x16, a square-spiral key on a continuous baseline (equal 4px channels) */
-  .meander, .meander-rule{
-    --key: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><path d='M0,16 L0,0 L12,0 L12,12 L4,12 L4,4 L8,4 L8,8 L12,8 L12,16 L16,16' fill='none' stroke='black' stroke-width='2'/></svg>");
-    width:100%;
-    background:var(--gold);
-    -webkit-mask:var(--key) repeat-x center / 16px 16px;
-            mask:var(--key) repeat-x center / 16px 16px;
-  }
-  .meander{height:16px;opacity:.9;}
-  /* the divider uses the same key, slightly smaller and a touch stronger for legibility */
-  .meander-rule{
-    height:14px;
-    -webkit-mask-size:14px 14px;
-            mask-size:14px 14px;
-    opacity:.7;
-  }
-  .divider{
-    display:flex;align-items:center;gap:18px;
-    margin:0 auto;
-    max-width:520px;
-    opacity:.85;
-  }
-  .divider .meander-rule{flex:1;}
-  .divider .glyph{
-    color:var(--gold);font-size:1.1rem;flex:0 0 auto;line-height:1;
-    filter:drop-shadow(0 0 8px rgba(224,192,116,.35));
-  }
-
-  /* ============ TOP MEANDER ============ */
-  .topband{
-    position:relative;z-index:5;
-    border-bottom:1px solid var(--hair);
-    background:linear-gradient(180deg, rgba(9,29,47,.6), transparent);
-  }
-  .topband .meander{height:14px;opacity:.5;}
 
   /* ============ NAV ============ */
   header.nav{
-    position:relative;z-index:6;
+    position:sticky;top:0;z-index:20;
+    background:rgba(10,10,11,.72);
+    backdrop-filter:saturate(180%) blur(12px);
+    border-bottom:1px solid var(--line);
   }
-  .nav-inner{
-    display:flex;align-items:center;justify-content:space-between;
-    padding:22px 0 18px;
-  }
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:15px 0;}
   .brandmark{
-    font-family:'Cinzel',serif;
-    font-weight:600;
-    letter-spacing:.28em;
-    font-size:1.02rem;
-    color:var(--marble);
-    text-transform:uppercase;
+    font-family:var(--mono);font-weight:600;font-size:1.02rem;letter-spacing:-.01em;
+    color:var(--text);display:inline-flex;align-items:center;gap:9px;
   }
-  .brandmark .v{color:var(--gold-bright);}
-  .nav-links{display:flex;gap:30px;align-items:center;}
+  .brandmark .sq{
+    width:22px;height:22px;border-radius:6px;border:1px solid var(--accent-line);
+    display:grid;place-items:center;font-size:.82rem;color:var(--text);
+    background:var(--accent-soft);
+  }
+  .nav-links{display:flex;gap:6px;align-items:center;}
   .nav-links a{
-    font-family:'Cinzel',serif;
-    font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;
-    color:var(--mist);font-weight:400;
-    transition:color .3s var(--ease);
+    font-size:.86rem;color:var(--muted);font-weight:450;
+    padding:8px 12px;border-radius:7px;transition:color .2s var(--ease),background .2s var(--ease);
   }
-  .nav-links a:hover{color:var(--gold-bright);}
+  .nav-links a:hover{color:var(--text);background:rgba(255,255,255,.04);}
   .nav-links a.ghost{
-    border:1px solid var(--hair);
-    padding:9px 16px;border-radius:2px;color:var(--marble);
+    border:1px solid var(--line-2);color:var(--text);
+    display:inline-flex;align-items:center;gap:7px;
   }
-  .nav-links a.ghost:hover{border-color:var(--gold);color:var(--gold-bright);}
+  .nav-links a.ghost:hover{border-color:var(--accent-line);background:var(--accent-soft);}
+  .nav-links a.ghost svg{width:15px;height:15px;}
 
   /* ============ HERO ============ */
-  .hero{
-    position:relative;
-    text-align:center;
-    padding:64px 0 92px;
-    overflow:hidden;
+  .hero{padding:104px 0 72px;}
+  .pill{
+    display:inline-flex;align-items:center;gap:9px;
+    font-family:var(--mono);font-size:.74rem;letter-spacing:.02em;color:var(--muted);
+    border:1px solid var(--line);border-radius:999px;padding:6px 13px;margin-bottom:30px;
+    background:var(--panel);
   }
-  .hero-glow{
-    position:absolute;left:50%;top:8%;transform:translateX(-50%);
-    width:680px;height:680px;max-width:120vw;
-    background:radial-gradient(circle, rgba(224,192,116,.20) 0%, rgba(224,192,116,0) 62%);
-    filter:blur(6px);
-    z-index:0;pointer-events:none;
-  }
-  .hero-inner{position:relative;z-index:2;}
+  .pill .dot{width:7px;height:7px;border-radius:50%;background:var(--ship);box-shadow:0 0 0 3px var(--ship-soft);}
+  .pill b{color:var(--text);font-weight:600;}
 
-  .wordmark{
-    font-family:'Cinzel',serif;
-    font-weight:600;
-    font-size:clamp(3.2rem,12vw,7.4rem);
-    line-height:.96;
-    letter-spacing:.04em;
-    margin:0;
-    color:var(--marble);
-    text-shadow:0 1px 0 rgba(0,0,0,.35), 0 0 40px rgba(224,192,116,.10);
+  h1.headline{
+    font-size:clamp(2.5rem,6.2vw,4.35rem);
+    line-height:1.04;letter-spacing:-.025em;font-weight:680;
+    margin:0 0 24px;max-width:15ch;color:var(--text);
   }
-  .wordmark .joy{color:var(--marble);}
-  .wordmark .vend{
-    color:var(--gold);
-    position:relative;
-    background:linear-gradient(180deg,var(--gold-bright),var(--gold) 55%,var(--gold-deep));
-    -webkit-background-clip:text;background-clip:text;
-    -webkit-text-fill-color:transparent;
-    text-shadow:0 0 34px rgba(224,192,116,.28);
+  h1.headline .accent{color:var(--accent);}
+  .lede{
+    font-size:clamp(1.08rem,1.6vw,1.28rem);
+    color:var(--muted);max-width:54ch;margin:0 0 18px;line-height:1.6;
   }
-  .wordmark-rule{
-    width:118px;height:2px;margin:24px auto 0;
-    background:linear-gradient(90deg,transparent,var(--gold),transparent);
-  }
-
-  .hero-headline{
-    font-family:'Cormorant Garamond',serif;
-    font-weight:500;
-    font-size:clamp(1.5rem,3vw,2.25rem);
-    line-height:1.18;
-    letter-spacing:.2px;
-    margin:30px auto 18px;
-    max-width:18ch;
-    color:var(--marble);
-  }
-  .hero-headline em{color:var(--gold-bright);font-style:italic;}
-
-  .hero-sub{
-    font-size:1.08rem;
-    color:var(--mist);
-    max-width:46ch;margin:0 auto 14px;
-  }
+  .lede b{color:var(--text);font-weight:600;}
   .creed{
-    display:flex;flex-wrap:wrap;gap:10px 14px;justify-content:center;
-    margin:18px auto 0;
-    font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.26em;
-    text-transform:uppercase;color:var(--gold-bright);
+    display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center;
+    font-family:var(--mono);font-size:.76rem;color:var(--faint);margin:0 0 36px;
   }
-  .creed span{display:inline-flex;align-items:center;gap:14px;}
-  .creed span::after{content:"·";color:var(--gold);opacity:.6;}
-  .creed span:last-child::after{content:"";}
+  .creed span{color:var(--muted);}
+  .creed i{color:var(--line-2);font-style:normal;}
 
-  .cta-row{
-    display:flex;gap:16px;justify-content:center;flex-wrap:wrap;
-    margin-top:40px;
-  }
+  .cta-row{display:flex;gap:12px;flex-wrap:wrap;align-items:center;}
   .btn{
-    font-family:'Cinzel',serif;
-    font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;
-    padding:15px 30px;border-radius:2px;
-    transition:transform .3s var(--ease), box-shadow .3s var(--ease), background .3s var(--ease), color .3s var(--ease);
-    display:inline-flex;align-items:center;gap:10px;
-    border:1px solid transparent;cursor:pointer;
+    font-size:.92rem;font-weight:550;border-radius:9px;padding:12px 20px;
+    display:inline-flex;align-items:center;gap:9px;cursor:pointer;border:1px solid transparent;
+    transition:transform .18s var(--ease),background .2s var(--ease),border-color .2s var(--ease),box-shadow .2s var(--ease);
   }
-  .btn-gold{
-    background:linear-gradient(180deg,var(--gold-bright),var(--gold));
-    color:#23180a;
-    box-shadow:0 8px 26px rgba(201,162,75,.26), inset 0 1px 0 rgba(255,255,255,.4);
-    font-weight:600;
-  }
-  .btn-gold:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(201,162,75,.36), inset 0 1px 0 rgba(255,255,255,.5);}
-  .btn-ghost{
-    border-color:var(--hair);color:var(--marble);
-    background:rgba(238,231,215,.02);
-  }
-  .btn-ghost:hover{border-color:var(--gold);color:var(--gold-bright);transform:translateY(-2px);}
+  .btn svg{width:16px;height:16px;}
+  .btn-primary{background:var(--accent);color:#06121f;font-weight:600;box-shadow:0 1px 0 rgba(255,255,255,.18) inset;}
+  .btn-primary:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(94,158,255,.28),0 1px 0 rgba(255,255,255,.18) inset;}
+  .btn-ghost{border-color:var(--line-2);color:var(--text);background:var(--panel);}
+  .btn-ghost:hover{border-color:var(--accent-line);background:var(--accent-soft);transform:translateY(-1px);}
 
-  /* ============ section scaffolding ============ */
-  section{position:relative;}
-  .section-pad{padding:96px 0;}
-  .section-head{text-align:center;max-width:64ch;margin:0 auto 56px;}
-  .section-head .eyebrow{margin-bottom:18px;}
+  /* ---- hero terminal ---- */
+  .terminal{
+    margin-top:54px;border:1px solid var(--line);border-radius:12px;overflow:hidden;
+    background:linear-gradient(180deg,var(--panel-2),var(--panel));
+    box-shadow:0 24px 70px rgba(0,0,0,.45);
+    max-width:680px;
+  }
+  .term-bar{
+    display:flex;align-items:center;gap:8px;padding:11px 15px;border-bottom:1px solid var(--line);
+    background:rgba(255,255,255,.02);
+  }
+  .term-bar .b{width:11px;height:11px;border-radius:50%;background:#2c2c31;}
+  .term-bar .t{margin-left:8px;font-family:var(--mono);font-size:.74rem;color:var(--faint);}
+  .term-body{
+    padding:18px 20px 20px;font-family:var(--mono);font-size:.84rem;line-height:1.85;
+    color:var(--muted);overflow-x:auto;
+  }
+  .term-body .pr{color:var(--accent);}
+  .term-body .ok{color:var(--ship);}
+  .term-body .nm{color:var(--text);}
+  .term-body .cm{color:var(--faint);}
+  .term-body .ar{color:var(--accent);}
+
+  /* ============ SECTION SCAFFOLD ============ */
+  .section{padding:92px 0;border-top:1px solid var(--line);}
+  .section-head{max-width:62ch;margin:0 0 48px;}
   .section-title{
-    font-family:'Cinzel',serif;font-weight:600;
-    font-size:clamp(1.9rem,4.2vw,3.05rem);
-    letter-spacing:.02em;line-height:1.12;margin:0 0 18px;
-    color:var(--marble);
+    font-size:clamp(1.7rem,3.6vw,2.45rem);letter-spacing:-.02em;line-height:1.12;
+    font-weight:650;margin:0 0 16px;color:var(--text);
   }
-  .section-lede{
-    font-family:'Cormorant Garamond',serif;
-    font-size:clamp(1.2rem,2vw,1.5rem);
-    color:var(--mist);font-weight:400;margin:0 auto;max-width:54ch;line-height:1.5;
-  }
+  .section-lede{font-size:1.08rem;color:var(--muted);margin:0;max-width:56ch;}
+  .section-lede b{color:var(--text);font-weight:600;}
 
-  /* surface panels read like polished marble tablets */
-  .panel{
-    background:linear-gradient(180deg, rgba(238,231,215,.055), rgba(238,231,215,.02));
-    border:1px solid var(--hair);
-    border-radius:4px;
-    backdrop-filter:blur(2px);
+  /* ============ HOW IT WORKS ============ */
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .feat{
+    padding:28px 26px;border:1px solid var(--line);border-radius:12px;background:var(--panel);
+    transition:border-color .25s var(--ease),transform .25s var(--ease);
   }
+  .feat:hover{border-color:var(--line-2);transform:translateY(-3px);}
+  .feat .ic{
+    width:38px;height:38px;border-radius:9px;display:grid;place-items:center;margin-bottom:18px;
+    border:1px solid var(--accent-line);background:var(--accent-soft);color:var(--accent);
+  }
+  .feat .ic svg{width:20px;height:20px;}
+  .feat h3{font-size:1.05rem;font-weight:600;letter-spacing:-.01em;margin:0 0 9px;color:var(--text);}
+  .feat p{margin:0;color:var(--muted);font-size:.95rem;line-height:1.6;}
 
-  /* ============ MISSION + VALUE CARDS ============ */
-  .mission{
-    border-top:1px solid var(--hair);
-    border-bottom:1px solid var(--hair);
-    background:linear-gradient(180deg, rgba(20,56,90,.30), rgba(12,36,56,0));
-  }
-  .cards{
-    display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:8px;
-  }
-  .card{
-    padding:38px 30px 34px;
-    border-radius:4px;
-    background:linear-gradient(180deg, rgba(238,231,215,.06), rgba(238,231,215,.015));
-    border:1px solid var(--hair);
-    position:relative;
-    transition:transform .4s var(--ease), border-color .4s var(--ease), box-shadow .4s var(--ease);
-    overflow:hidden;
-  }
-  .card::before{
-    content:"";position:absolute;left:0;top:0;right:0;height:2px;
-    background:linear-gradient(90deg,transparent,var(--gold),transparent);
-    opacity:.55;
-  }
-  .card:hover{
-    transform:translateY(-5px);
-    border-color:rgba(201,162,75,.6);
-    box-shadow:0 22px 48px rgba(0,0,0,.34);
-  }
-  .card .glyph{
-    width:48px;height:48px;margin-bottom:22px;color:var(--gold-bright);
-    filter:drop-shadow(0 0 10px rgba(224,192,116,.30));
-  }
-  .card h3{
-    font-family:'Cinzel',serif;font-weight:500;
-    font-size:1.04rem;letter-spacing:.1em;text-transform:uppercase;
-    margin:0 0 12px;color:var(--marble);
-  }
-  .card p{margin:0;color:var(--mist);font-size:1rem;line-height:1.62;}
-
-  /* ============ COMPONENTS ============ */
-  .components{
-    background:linear-gradient(180deg, rgba(9,29,47,0), rgba(20,56,90,.22));
-  }
-  .components-grid{
-    display:grid;gap:24px;
-  }
-  .capsule{
-    padding:46px 46px 42px;border-radius:5px;
-    position:relative;overflow:hidden;
-    background:
-      radial-gradient(120% 120% at 100% 0%, rgba(27,70,110,.5), rgba(12,36,56,0) 60%),
-      linear-gradient(180deg, rgba(238,231,215,.07), rgba(238,231,215,.02));
-    border:1px solid rgba(201,162,75,.42);
-    box-shadow:0 20px 60px rgba(0,0,0,.3);
-  }
-  /* gold meander hairline along the top of the capsule */
-  .capsule .cap-meander{
-    position:absolute;left:0;right:0;top:0;height:14px;opacity:.5;
-  }
-  .cap-badge{
-    display:inline-flex;align-items:center;gap:10px;
-    font-family:'Cinzel',serif;font-size:.64rem;letter-spacing:.28em;text-transform:uppercase;
-    color:var(--gold-bright);border:1px solid var(--hair);
-    padding:6px 13px;border-radius:2px;margin-bottom:24px;
-  }
-  .cap-badge .dot{width:7px;height:7px;border-radius:50%;background:var(--gold-bright);box-shadow:0 0 10px rgba(224,192,116,.9);}
-  .capsule h3{
-    font-family:'Cinzel',serif;font-weight:600;
-    font-size:clamp(1.45rem,2.6vw,1.95rem);letter-spacing:.01em;
-    margin:0 0 8px;color:var(--marble);
-  }
-  .capsule .kicker{
-    font-family:'Cormorant Garamond',serif;font-style:italic;
-    font-size:1.28rem;color:var(--gold-bright);margin:0 0 22px;
-  }
-  .capsule p.lede{color:var(--mist);margin:0 0 28px;max-width:52ch;}
-  .specs{list-style:none;padding:0;margin:0 0 32px;display:grid;grid-template-columns:1fr 1fr;gap:14px 28px;}
-  .specs li{
-    position:relative;padding-left:26px;color:var(--marble);
-    font-size:.98rem;line-height:1.45;
-  }
-  .specs li::before{
-    content:"";position:absolute;left:0;top:.5em;
-    width:11px;height:11px;border:1.5px solid var(--gold);border-radius:50%;
-    background:radial-gradient(circle,var(--gold-bright) 0 35%, transparent 38%);
-  }
-  .specs li b{color:var(--marble);font-weight:600;}
-  .specs li span{color:var(--mist);}
-  .cap-cta{display:flex;gap:14px;flex-wrap:wrap;align-items:center;}
-  .repo-link{
-    display:inline-flex;align-items:center;gap:10px;
-    font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;
-    color:var(--aegean);background:linear-gradient(180deg,var(--gold-bright),var(--gold));
-    padding:13px 22px;border-radius:2px;font-weight:600;
-    box-shadow:0 8px 22px rgba(201,162,75,.22),inset 0 1px 0 rgba(255,255,255,.4);
-    transition:transform .3s var(--ease),box-shadow .3s var(--ease);
-  }
-  .repo-link:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(201,162,75,.34),inset 0 1px 0 rgba(255,255,255,.5);}
-  .repo-link svg{width:18px;height:18px;}
-  .stack-note{font-family:'EB Garamond';font-size:.92rem;color:var(--mist-faint);font-style:italic;}
-
-  .soon-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
-  .soon-card{
-    border:1px dashed var(--hair);border-radius:5px;padding:28px 26px;
-    background:linear-gradient(180deg, rgba(238,231,215,.03), rgba(238,231,215,.008));
+  /* ============ SUITE ============ */
+  .suite-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+  .comp{
     display:flex;flex-direction:column;
+    padding:28px 28px 24px;border:1px solid var(--line);border-radius:13px;
+    background:linear-gradient(180deg,var(--panel-2),var(--panel));
+    position:relative;transition:border-color .25s var(--ease),transform .25s var(--ease),box-shadow .25s var(--ease);
   }
-  .soon-card .cap-ic{width:34px;height:34px;color:var(--gold);margin-bottom:16px;opacity:.92;}
-  .soon-card .tag{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);margin:0 0 10px;}
-  .soon-card h3{font-family:'Cinzel',serif;font-weight:500;font-size:1.2rem;letter-spacing:.03em;margin:0 0 12px;color:var(--gold-bright);}
-  .soon-card > p{margin:0;color:var(--mist);font-size:.97rem;line-height:1.6;}
-  .soon-card em{color:var(--gold-bright);font-style:italic;}
-  .soon-card .gives{margin-top:16px;color:var(--gold);font-style:italic;font-size:.95rem;font-family:'Cormorant Garamond',serif;}
-  .soon-link{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;margin-top:auto;padding-top:20px;
-    font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;font-weight:500;
-    color:var(--gold);transition:color .25s var(--ease);}
-  .soon-link:hover{color:var(--gold-bright);}
-  .soon-link svg{width:14px;height:14px;}
+  .comp:hover{border-color:var(--line-2);transform:translateY(-3px);box-shadow:0 18px 44px rgba(0,0,0,.34);}
+  .comp.planned{background:var(--panel);border-style:dashed;}
+  .comp-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+  .badge{
+    display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);
+    font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
+    border:1px solid var(--line);border-radius:999px;padding:4px 10px;
+  }
+  .badge.ship{color:var(--ship);border-color:var(--ship-soft);background:var(--ship-soft);}
+  .badge .d{width:6px;height:6px;border-radius:50%;background:currentColor;}
+  .comp h3{font-size:1.45rem;font-weight:650;letter-spacing:-.015em;margin:0 0 6px;color:var(--text);}
+  .comp .role{font-family:var(--mono);font-size:.8rem;color:var(--accent);margin:0 0 14px;}
+  .comp .desc{margin:0 0 18px;color:var(--muted);font-size:.96rem;line-height:1.6;}
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 22px;}
+  .chip{
+    font-family:var(--mono);font-size:.71rem;color:var(--muted);
+    border:1px solid var(--line);border-radius:6px;padding:4px 9px;background:rgba(255,255,255,.02);
+  }
+  .comp-cta{margin-top:auto;display:flex;align-items:center;gap:14px;}
+  .gh{
+    display:inline-flex;align-items:center;gap:8px;font-size:.86rem;font-weight:550;color:var(--text);
+    border:1px solid var(--line-2);border-radius:8px;padding:8px 14px;
+    transition:border-color .2s var(--ease),background .2s var(--ease);
+  }
+  .gh:hover{border-color:var(--accent-line);background:var(--accent-soft);}
+  .gh svg{width:15px;height:15px;}
+  .meta-note{font-family:var(--mono);font-size:.73rem;color:var(--faint);}
 
-  /* ============ MANIFESTO / PULL QUOTE ============ */
-  .manifesto{
-    text-align:center;
-    padding:120px 0;
-    position:relative;
-    border-top:1px solid var(--hair);
-    background:
-      radial-gradient(80% 120% at 50% 0%, rgba(224,192,116,.10), rgba(12,36,56,0) 60%),
-      linear-gradient(180deg, rgba(9,29,47,.4), rgba(12,36,56,0));
+  /* ============ WHY LOCAL ============ */
+  .why{
+    border:1px solid var(--line);border-radius:14px;
+    background:radial-gradient(120% 140% at 0% 0%,rgba(94,158,255,.07),transparent 55%),var(--panel);
+    padding:56px 48px;
   }
-  .quote{
-    font-family:'Cormorant Garamond',serif;
-    font-weight:500;
-    font-size:clamp(1.6rem,3.6vw,2.55rem);
-    line-height:1.34;
-    color:var(--marble);
-    max-width:24ch;margin:0 auto 26px;
-    font-style:italic;
+  .why blockquote{
+    margin:0;font-size:clamp(1.4rem,3vw,2.05rem);line-height:1.35;letter-spacing:-.015em;
+    font-weight:560;color:var(--text);max-width:26ch;
   }
-  .quote .gold{color:var(--gold-bright);font-style:normal;}
-  .attrib{
-    font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;
-    color:var(--gold);
-  }
+  .why blockquote .accent{color:var(--accent);}
+  .why .attrib{margin-top:22px;font-family:var(--mono);font-size:.78rem;color:var(--muted);letter-spacing:.04em;}
 
   /* ============ FOOTER ============ */
-  footer{
-    border-top:1px solid var(--hair);
-    padding-top:0;
-    background:linear-gradient(180deg, rgba(9,29,47,0), rgba(7,22,36,.6));
-  }
-  footer .meander{height:14px;opacity:.4;}
-  .foot-inner{
-    display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;
-    padding:42px 0 48px;
-  }
-  .foot-brand{
-    font-family:'Cinzel',serif;letter-spacing:.26em;text-transform:uppercase;
-    font-size:.92rem;color:var(--marble);font-weight:600;
-  }
-  .foot-brand .v{color:var(--gold-bright);}
-  .foot-links{display:flex;gap:26px;flex-wrap:wrap;}
-  .foot-links a{
-    font-family:'Cinzel',serif;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;
-    color:var(--mist);transition:color .3s var(--ease);
-  }
-  .foot-links a:hover{color:var(--gold-bright);}
-  .copyright{
-    font-family:'EB Garamond';font-size:.9rem;color:var(--mist-faint);
-    text-align:center;padding-bottom:40px;font-style:italic;
-  }
-  .copyright .greek{color:var(--gold);opacity:.7;font-size:1rem;}
+  footer{border-top:1px solid var(--line);padding:40px 0;}
+  .foot-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:18px;}
+  .foot-brand{font-family:var(--mono);font-weight:600;color:var(--text);}
+  .foot-links{display:flex;gap:22px;flex-wrap:wrap;}
+  .foot-links a{font-size:.84rem;color:var(--muted);transition:color .2s var(--ease);}
+  .foot-links a:hover{color:var(--text);}
+  .copyright{font-size:.82rem;color:var(--faint);margin-top:18px;}
 
-  /* ============ reveal-on-scroll ============ */
-  .reveal{opacity:0;transform:translateY(22px);transition:opacity .9s var(--ease),transform .9s var(--ease);}
+  /* ============ reveal ============ */
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .7s var(--ease),transform .7s var(--ease);}
   .reveal.in{opacity:1;transform:none;}
   @media (prefers-reduced-motion:reduce){
     .reveal{opacity:1;transform:none;transition:none;}
     html{scroll-behavior:auto;}
   }
 
-  /* ============ RESPONSIVE ============ */
-  @media (max-width:900px){
-    .cards{grid-template-columns:1fr;}
-    .soon-grid{grid-template-columns:1fr;}
-    .capsule{padding:38px 28px;}
-    .nav-links{gap:14px;}
-    .nav-links a{font-size:.6rem;letter-spacing:.14em;}
-    .nav-links a.ghost{padding:7px 12px;}
-    .section-pad{padding:74px 0;}
-    .manifesto{padding:88px 0;}
+  /* ============ responsive ============ */
+  @media (max-width:860px){
+    .grid3{grid-template-columns:1fr;}
+    .suite-grid{grid-template-columns:1fr;}
+    .hero{padding:72px 0 56px;}
+    .section{padding:68px 0;}
+    .why{padding:40px 26px;}
+    .nav-links a:not(.ghost){display:none;}
   }
   @media (max-width:560px){
-    .wrap{padding:0 20px;}
-    .hero{padding:40px 0 64px;}
-    .specs{grid-template-columns:1fr;}
-    .capsule{padding:32px 22px;}
-    .cta-row .btn{width:100%;justify-content:center;}
-    .foot-inner{flex-direction:column;text-align:center;justify-content:center;}
+    .wrap{padding:0 18px;}
+    .cta-row .btn{flex:1;justify-content:center;}
+    .term-body{font-size:.78rem;}
   }
 </style>
 </head>
 <body>
 
-  <!-- top meander band -->
-  <div class="topband"><div class="meander"></div></div>
-
   <!-- NAV -->
   <header class="nav">
-    <div class="wrap">
-      <div class="nav-inner">
-        <a class="brandmark" href="#top">MY<span class="v">KEEP</span></a>
-        <nav class="nav-links">
-          <a href="#mission">How it works</a>
-          <a href="#components">Suite</a>
-          <a href="#ethos">Why local</a>
-          <a class="ghost" href="https://github.com/lexxx233/mykeep-capsule" target="_blank" rel="noopener">GitHub</a>
-        </nav>
-      </div>
+    <div class="wrap nav-inner">
+      <a class="brandmark" href="#top"><span class="sq mono">m</span>mykeep</a>
+      <nav class="nav-links">
+        <a href="#how">How it works</a>
+        <a href="#suite">Suite</a>
+        <a href="#why">Why local</a>
+        <a class="ghost" href="https://github.com/lexxx233" target="_blank" rel="noopener">
+          <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.4 7.4 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+          GitHub
+        </a>
+      </nav>
     </div>
   </header>
 
   <!-- HERO -->
   <section class="hero" id="top">
-    <div class="hero-glow"></div>
-
-    <div class="wrap hero-inner">
-      <h1 class="wordmark reveal"><span class="joy">MY</span><span class="vend">KEEP</span></h1>
-      <div class="wordmark-rule reveal"></div>
-
-      <h2 class="hero-headline reveal">Advanced local tools for <em>any</em> AI agent.</h2>
-      <p class="hero-sub reveal">A portable suite of capabilities that make any AI agent <em>yours</em> — your memory, your tools, your keys — all sealed on a USB stick. No cloud, no install, no lock-in.</p>
-
-      <div class="creed reveal">
-        <span>Personal</span><span>Private</span><span>Portable</span>
-      </div>
+    <div class="wrap">
+      <span class="pill reveal"><span class="dot"></span>Three capabilities <b>shipped</b> — Capsule, Vault, Showstone</span>
+      <h1 class="headline reveal">Local AI capabilities, on a <span class="accent">USB stick</span>.</h1>
+      <p class="lede reveal">mykeep is a portable suite of local capabilities — <b>memory, keys, a browser</b> — that any AI agent plugs into over a loopback API. One binary and an encrypted file per capability, sealed on a drive you carry.</p>
+      <p class="lede reveal">Plug the stick into <b>any machine</b> — Windows, macOS, Linux — and your agent's powers travel with it. No cloud, no install, no lock-in.</p>
+      <div class="creed reveal"><span>Personal</span><i>/</i><span>Private</span><i>/</i><span>Portable</span></div>
 
       <div class="cta-row reveal">
-        <a class="btn btn-gold" href="#components">Explore the suite</a>
-        <a class="btn btn-ghost" href="https://github.com/lexxx233/mykeep-capsule" target="_blank" rel="noopener">View the Capsule</a>
+        <a class="btn btn-primary" href="#suite">Explore the suite</a>
+        <a class="btn btn-ghost" href="https://github.com/lexxx233/mykeep-capsule" target="_blank" rel="noopener">
+          <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.4 7.4 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+          View the source
+        </a>
+      </div>
+
+      <div class="terminal reveal" aria-hidden="true">
+        <div class="term-bar"><span class="b"></span><span class="b"></span><span class="b"></span><span class="t">~/usb/mykeep</span></div>
+        <div class="term-body"><span class="pr">$</span> ./mykeep serve
+<span class="ok">  ✓</span> <span class="nm">capsule  </span> <span class="cm">memory   — encrypted, semantic + keyword recall</span>
+<span class="ok">  ✓</span> <span class="nm">vault    </span> <span class="cm">keys     — authenticated calls by reference</span>
+<span class="ok">  ✓</span> <span class="nm">showstone</span> <span class="cm">browser  — a real Chromium it drives</span>
+<span class="cm">  …</span> <span class="nm">foundry  </span> <span class="cm">tools    — planned</span>
+
+  <span class="ar">→</span> http://127.0.0.1:8765  <span class="cm">(loopback · any agent plugs in)</span></div>
       </div>
     </div>
   </section>
 
-  <!-- MISSION -->
-  <section class="mission section-pad" id="mission">
+  <!-- HOW IT WORKS -->
+  <section class="section" id="how">
     <div class="wrap">
       <div class="section-head reveal">
         <p class="eyebrow">How it works</p>
         <h2 class="section-title">You bring the agent. mykeep brings the capabilities.</h2>
-        <p class="section-lede">mykeep has no AI of its own. Your agent — Claude Code, Cursor, or anything that can call a local API — does the thinking; mykeep hands it advanced capabilities it doesn't ship with, over a loopback connection on the stick. Your memory, your tools, your keys: a stock agent becomes <em>yours</em> — on any machine, owned and private.</p>
+        <p class="section-lede">mykeep has no AI of its own. Your agent — Claude Code, Cursor, anything that can call a local API — does the thinking; mykeep hands it advanced capabilities it doesn't ship with, over a loopback connection on the stick. A stock agent becomes <b>yours</b>, on any machine, owned and private.</p>
       </div>
 
-      <div class="divider reveal" style="margin-bottom:54px;">
-        <span class="meander-rule"></span><span class="glyph">❖</span><span class="meander-rule"></span>
-      </div>
-
-      <div class="cards">
-        <article class="card reveal">
-          <svg class="glyph" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path d="M24 4 L40 11 V22 C40 33 33 41 24 44 C15 41 8 33 8 22 V11 Z"/>
-            <path d="M24 22 m-5 0 a5 5 0 1 0 10 0 a5 5 0 1 0 -10 0"/>
-            <path d="M24 27 V34"/>
-          </svg>
+      <div class="grid3">
+        <article class="feat reveal">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 19 5.5V11c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V5.5Z"/><path d="m9 12 2 2 4-4"/></svg></span>
           <h3>Private by design</h3>
           <p>Everything runs on the stick — no cloud round-trips, no telemetry, no accounts. Each capability and its data are encrypted at rest; lose the stick and a thief gets only ciphertext.</p>
         </article>
-
-        <article class="card reveal">
-          <svg class="glyph" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <rect x="9" y="8" width="30" height="22" rx="2"/>
-            <path d="M9 24 H39"/>
-            <path d="M18 36 H30 M16 40 H32"/>
-            <circle cx="24" cy="16" r="3.4"/>
-          </svg>
+        <article class="feat reveal">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17V7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="m8 9 2 2-2 2"/><path d="M13 13h3"/></svg></span>
           <h3>Works with any agent</h3>
-          <p>Any client that can make a local HTTP call plugs in — Claude Code, Cursor, custom agents. A pasted snippet is the whole integration: no SDK, no plugin, no MCP.</p>
+          <p>Any client that can make a local HTTP call plugs in — Claude Code, Cursor, custom agents. A pasted snippet is the whole integration: no SDK, no plugin, no MCP required.</p>
         </article>
-
-        <article class="card reveal">
-          <svg class="glyph" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <rect x="14" y="21" width="20" height="18" rx="2"/>
-            <path d="M18 21 V15 A6 6 0 0 1 30 15 V21"/>
-            <circle cx="24" cy="29" r="2.4"/><path d="M24 31.4 V34"/>
-          </svg>
+        <article class="feat reveal">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="10" width="10" height="9" rx="1.5"/><path d="M9 10V7.5a3 3 0 0 1 6 0V10"/><path d="M12 14v2"/></svg></span>
           <h3>Carry it anywhere</h3>
-          <p>A USB stick is the whole platform. Binaries, config, and data live on the drive — plug into Windows, macOS, or Linux and your agent's powers travel with you. No installer, no lock-in.</p>
+          <p>The drive is the whole platform — binaries, config, and data all live on it. Plug into Windows, macOS, or Linux; pure-Go static binaries mean no installer, no runtime, no lock-in.</p>
         </article>
       </div>
     </div>
   </section>
 
-  <!-- COMPONENTS -->
-  <section class="components section-pad" id="components">
+  <!-- SUITE -->
+  <section class="section" id="suite">
     <div class="wrap">
       <div class="section-head reveal">
-        <p class="eyebrow">The Suite</p>
-        <h2 class="section-title">A growing kit of local capabilities</h2>
-        <p class="section-lede">Each component is a self-contained capability any agent can use — all on the stick, all from Domu. Together they make a stock agent <em>yours</em>: the Capsule (it knows you) and Vault (it acts as you) have shipped; the Foundry (it does more) and Showstone (it sees the web) are next.</p>
+        <p class="eyebrow">The suite</p>
+        <h2 class="section-title">A growing kit of portable, local capabilities.</h2>
+        <p class="section-lede">Each component is a self-contained capability — its own pure-Go binary and encrypted file — that any agent can use on its own, or all together behind <b>one password</b>. Three have shipped; one is next.</p>
       </div>
 
-      <div class="components-grid">
+      <div class="suite-grid">
         <!-- Capsule -->
-        <article class="capsule reveal">
-          <div class="cap-meander meander"></div>
-          <span class="cap-badge"><span class="dot"></span>Shipped · v1 core</span>
+        <article class="comp reveal">
+          <div class="comp-top">
+            <span class="badge ship"><span class="d"></span>Shipped · v1</span>
+            <span class="meta-note">it knows you</span>
+          </div>
           <h3>Capsule</h3>
-          <p class="kicker">A portable, encrypted memory store for AI agents.</p>
-          <p class="lede">A pure-Go binary and a single encrypted file you carry on a USB stick. Plug it into any machine — Windows, macOS, Linux — and your agent's memory travels with you, never the cloud.</p>
-
-          <ul class="specs">
-            <li><b>Whole-DB encryption</b><br><span>AES-256-GCM, sealed at rest</span></li>
-            <li><b>Local CPU embeddings</b><br><span>bge-small, no network, no GPU</span></li>
-            <li><b>Semantic + keyword recall</b><br><span>vector KNN fused with BM25</span></li>
-            <li><b>Pure Go, zero CGo</b><br><span>one static binary, six targets</span></li>
-          </ul>
-
-          <div class="cap-cta">
-            <a class="repo-link" href="https://github.com/lexxx233/mykeep-capsule" target="_blank" rel="noopener">
+          <p class="role">portable encrypted memory</p>
+          <p class="desc">A single encrypted file you carry on the stick. Plug it into any machine and your agent's memory travels with you — semantic + keyword recall, never the cloud.</p>
+          <div class="chips">
+            <span class="chip">AES-256-GCM at rest</span>
+            <span class="chip">local CPU embeddings</span>
+            <span class="chip">vector + BM25 recall</span>
+            <span class="chip">zero CGo</span>
+          </div>
+          <div class="comp-cta">
+            <a class="gh" href="https://github.com/lexxx233/mykeep-capsule" target="_blank" rel="noopener">
               <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.4 7.4 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
-              Open on GitHub
+              GitHub
             </a>
-            <span class="stack-note">MIT-licensed · runs from a USB stick</span>
+            <span class="meta-note">MIT-licensed</span>
           </div>
         </article>
 
-        <!-- Vault — tested v1 in the repo -->
-        <article class="capsule reveal">
-          <div class="cap-meander meander"></div>
-          <span class="cap-badge"><span class="dot"></span>Shipped · v1</span>
+        <!-- Vault -->
+        <article class="comp reveal">
+          <div class="comp-top">
+            <span class="badge ship"><span class="d"></span>Shipped · v1</span>
+            <span class="meta-note">it acts as you</span>
+          </div>
           <h3>Vault</h3>
-          <p class="kicker">Your keys, sealed on the stick — the agent acts as you, never holding them.</p>
-          <p class="lede">Your API keys live encrypted beside your memory. The agent makes authenticated calls <em>by reference</em> through a local broker, so the raw secret never reaches the model or the cloud.</p>
-
-          <ul class="specs">
-            <li><b>By-reference broker</b><br><span>the agent never sees the key</span></li>
-            <li><b>Allowlist + resolve-then-pin</b><br><span>SSRF-hardened egress</span></li>
-            <li><b>Approve writes · audit log</b><br><span>bounded &amp; observable</span></li>
-            <li><b>Pure Go, zero CGo</b><br><span>one static binary, six targets</span></li>
-          </ul>
-
-          <div class="cap-cta">
-            <a class="repo-link" href="https://github.com/lexxx233/mykeep-vault" target="_blank" rel="noopener">
+          <p class="role">a by-reference secrets broker</p>
+          <p class="desc">Your API keys live encrypted beside your memory. The agent makes authenticated calls <em>by reference</em> through a local broker, so the raw secret never reaches the model or the cloud.</p>
+          <div class="chips">
+            <span class="chip">key never seen by the agent</span>
+            <span class="chip">SSRF-hardened egress</span>
+            <span class="chip">approve + audit writes</span>
+            <span class="chip">zero CGo</span>
+          </div>
+          <div class="comp-cta">
+            <a class="gh" href="https://github.com/lexxx233/mykeep-vault" target="_blank" rel="noopener">
               <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.4 7.4 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
-              Open on GitHub
+              GitHub
             </a>
-            <span class="stack-note">MIT-licensed · loopback-only by default</span>
+            <span class="meta-note">loopback by default</span>
           </div>
         </article>
 
-        <!-- One more coming -->
-        <div class="soon-grid">
-          <article class="soon-card reveal">
-            <svg class="cap-ic" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M20 5 L34 12 L20 19 L6 12 Z"/>
-              <path d="M6 20 L20 27 L34 20"/>
-              <path d="M6 28 L20 35 L34 28"/>
-            </svg>
-            <p class="tag">Planned</p>
-            <h3>Foundry</h3>
-            <p>A local server that hosts plug-and-play skills and tools <em>and</em> the infrastructure they run on — database, queue, cache, object storage — a backend-in-a-box, all sealed on the stick.</p>
-            <p class="gives">→ your agent can <em>do</em> more</p>
-            <a class="soon-link" href="https://github.com/lexxx233/mykeep-foundry" target="_blank" rel="noopener">
+        <!-- Showstone -->
+        <article class="comp reveal">
+          <div class="comp-top">
+            <span class="badge ship"><span class="d"></span>Shipped · v1</span>
+            <span class="meta-note">it sees the web</span>
+          </div>
+          <h3>Showstone</h3>
+          <p class="role">a portable browser it drives</p>
+          <p class="desc">A real Chromium your agent drives over a loopback REST API — reads pages as compact text, acts on numbered elements, and screenshots on demand. Sensitive actions block for your approval.</p>
+          <div class="chips">
+            <span class="chip">indexed-element snapshots</span>
+            <span class="chip">sealed, portable profile</span>
+            <span class="chip">approval gate + audit</span>
+            <span class="chip">zero CGo control plane</span>
+          </div>
+          <div class="comp-cta">
+            <a class="gh" href="https://github.com/lexxx233/mykeep-showstone" target="_blank" rel="noopener">
+              <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.4 7.4 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+              GitHub
+            </a>
+            <span class="meta-note">MIT-licensed</span>
+          </div>
+        </article>
+
+        <!-- Foundry -->
+        <article class="comp planned reveal">
+          <div class="comp-top">
+            <span class="badge"><span class="d"></span>Planned</span>
+            <span class="meta-note">it does more</span>
+          </div>
+          <h3>Foundry</h3>
+          <p class="role">a backend-in-a-box</p>
+          <p class="desc">A local server that hosts plug-and-play skills and tools <em>and</em> the infrastructure they run on — database, queue, cache, object storage — all sealed on the stick.</p>
+          <div class="chips">
+            <span class="chip">plug-and-play tools</span>
+            <span class="chip">db · queue · cache · storage</span>
+            <span class="chip">sealed on the stick</span>
+          </div>
+          <div class="comp-cta">
+            <a class="gh" href="https://github.com/lexxx233/mykeep-foundry" target="_blank" rel="noopener">
               <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.4 7.4 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
               Read the vision
             </a>
-          </article>
-          <article class="soon-card reveal">
-            <svg class="cap-ic" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M13 8 H27 L33 16 L20 33 L7 16 Z"/>
-              <path d="M7 16 H33"/>
-              <path d="M13 8 L18 16 L20 33 L22 16 L27 8"/>
-            </svg>
-            <p class="tag">Planned</p>
-            <h3>Showstone</h3>
-            <p>A contained, portable web browser — a bundled Chromium your agent drives by reference. It sees and acts on the live web, logged in <em>as you</em> via Vault, in a sandbox you carry that leaves no trace on the host.</p>
-            <p class="gives">→ your agent can <em>see</em> the web</p>
-            <a class="soon-link" href="https://github.com/lexxx233/mykeep-showstone" target="_blank" rel="noopener">
-              <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.4 7.4 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
-              Read the vision
-            </a>
-          </article>
-        </div>
+          </div>
+        </article>
       </div>
     </div>
   </section>
 
-  <!-- MANIFESTO -->
-  <section class="manifesto" id="ethos">
+  <!-- WHY LOCAL -->
+  <section class="section" id="why">
     <div class="wrap">
-      <blockquote class="quote reveal">
-        “The powers your AI relies on should belong to <span class="gold">you</span> — running on hardware you hold, owing nothing to the cloud, answering to no one else.”
-      </blockquote>
+      <div class="why reveal">
+        <blockquote>The powers your AI relies on should belong to <span class="accent">you</span> — running on hardware you hold, owing nothing to the cloud, answering to no one else.</blockquote>
+        <p class="attrib">— the mykeep premise</p>
+      </div>
     </div>
   </section>
 
   <!-- FOOTER -->
   <footer>
-    <div class="meander"></div>
     <div class="wrap">
       <div class="foot-inner">
-        <a class="foot-brand" href="#top">MY<span class="v">KEEP</span></a>
+        <span class="foot-brand">mykeep</span>
         <nav class="foot-links">
-          <a href="#mission">How it works</a>
-          <a href="#components">Suite</a>
-          <a href="#ethos">Why local</a>
-          <a href="https://github.com/lexxx233/mykeep-capsule" target="_blank" rel="noopener">GitHub</a>
+          <a href="#how">How it works</a>
+          <a href="#suite">Suite</a>
+          <a href="#why">Why local</a>
+          <a href="https://github.com/lexxx233" target="_blank" rel="noopener">GitHub</a>
         </nav>
       </div>
-      <p class="copyright">© 2026 Domu Inc. &nbsp;·&nbsp; local, private, and yours.</p>
+      <p class="copyright">© 2026 Domu Inc. · local, private, and yours.</p>
     </div>
   </footer>
 
   <script>
-    // gentle reveal-on-scroll — purely decorative, content is visible without JS
+    // gentle reveal-on-scroll — purely decorative; content is visible without JS
     (function () {
       var els = document.querySelectorAll('.reveal');
       if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -692,7 +490,7 @@
         entries.forEach(function (en) {
           if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
         });
-      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+      }, { threshold: 0.1, rootMargin: '0px 0px -6% 0px' });
       els.forEach(function (e) { io.observe(e); });
     })();
   </script>
