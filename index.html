@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>mykeep — portable AI capabilities, on a USB stick</title>
-<meta name="description" content="mykeep is a portable suite of capabilities — memory, keys, a browser, tools — that any AI agent plugs into over a loopback API. One stick, any machine. No cloud, no install, no lock-in.">
+<title>mykeep — portable AI capabilities, on a USB drive</title>
+<meta name="description" content="mykeep is a portable suite of capabilities — memory, keys, a browser, tools — that any AI agent plugs into over a loopback API. One drive, any machine. No cloud, no install, no lock-in.">
 <meta name="theme-color" content="#0a0a0b">
-<meta property="og:title" content="mykeep — portable AI capabilities, on a USB stick">
-<meta property="og:description" content="A portable suite of capabilities for any AI agent — memory, keys, a browser, tools — on a USB stick. Private, personal, portable.">
+<meta property="og:title" content="mykeep — portable AI capabilities, on a USB drive">
+<meta property="og:description" content="A portable suite of capabilities for any AI agent — memory, keys, a browser, tools — on a USB drive. Private, personal, portable.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://mykeep.ai">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3CradialGradient id='g' cx='40%25' cy='36%25' r='70%25'%3E%3Cstop offset='0%25' stop-color='%23bcd6ff'/%3E%3Cstop offset='100%25' stop-color='%235e9eff'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='%230a0a0b'/%3E%3Ccircle cx='16' cy='16' r='9' fill='url(%23g)'/%3E%3C/svg%3E">
@@ -74,7 +74,7 @@
     backdrop-filter:saturate(180%) blur(12px);
     border-bottom:1px solid var(--line);
   }
-  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:15px 0;}
+  .nav-inner{position:relative;display:flex;align-items:center;justify-content:space-between;padding:15px 0;}
   .brandmark{
     font-family:var(--mono);font-weight:600;font-size:1.02rem;letter-spacing:-.01em;
     color:var(--text);display:inline-flex;align-items:center;gap:9px;
@@ -121,12 +121,11 @@
     color:var(--muted);max-width:54ch;margin:0 auto 18px;line-height:1.6;
   }
   .lede b{color:var(--text);font-weight:600;}
-  .creed{
-    display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center;justify-content:center;
-    font-family:var(--mono);font-size:.76rem;color:var(--faint);margin:0 0 36px;
+  /* creed lives in the header — the highlight, always visible, centered */
+  .creed-head{
+    position:absolute;left:50%;transform:translateX(-50%);
+    font-family:var(--mono);font-size:.74rem;letter-spacing:.04em;color:var(--muted);white-space:nowrap;
   }
-  .creed span{color:var(--muted);}
-  .creed i{color:var(--line-2);font-style:normal;}
 
   .cta-row{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:center;}
   .btn{
@@ -254,6 +253,7 @@
     .section{padding:68px 0;}
     .why{padding:40px 26px;}
     .nav-links a:not(.ghost){display:none;}
+    .creed-head{display:none;}
   }
   @media (max-width:560px){
     .wrap{padding:0 18px;}
@@ -268,6 +268,7 @@
   <header class="nav">
     <div class="wrap nav-inner">
       <a class="brandmark" href="#top">mykeep</a>
+      <span class="creed-head">Personal · Private · Portable</span>
       <nav class="nav-links">
         <a href="#how">How it works</a>
         <a href="#suite">Suite</a>
@@ -305,10 +306,9 @@
           </g>
         </svg>
       </div>
-      <h1 class="headline reveal">Portable AI capabilities, on a <span class="accent">USB stick</span>.</h1>
-      <p class="lede reveal">mykeep is a portable suite of capabilities — <b>memory, keys, a browser, tools</b> — that any AI agent plugs into over a loopback API. One binary and an encrypted file per capability, on a drive you carry.</p>
-      <p class="lede reveal">Plug the stick into <b>any machine</b> — Windows, macOS, Linux — and your agent's powers travel with it. No cloud, no install, no lock-in.</p>
-      <div class="creed reveal"><span>Personal</span><i>/</i><span>Private</span><i>/</i><span>Portable</span></div>
+      <h1 class="headline reveal">Portable AI capabilities, on a <span class="accent">USB drive</span>.</h1>
+      <p class="lede reveal">Memory, keys, a browser, tools — capabilities any AI agent plugs into over a loopback API. Each is one binary and one encrypted file, on a drive you carry.</p>
+      <p class="lede reveal">Plug it into <b>any machine</b> — Windows, macOS, Linux — and your agent's powers come with it. No cloud, no install, no lock-in.</p>
 
       <div class="cta-row reveal">
         <a class="btn btn-primary" href="#suite">Explore the suite</a>
@@ -337,24 +337,24 @@
       <div class="section-head reveal">
         <p class="eyebrow">How it works</p>
         <h2 class="section-title">You bring the agent. mykeep brings the capabilities.</h2>
-        <p class="section-lede">mykeep has no AI of its own. Your agent — Claude Code, Cursor, anything that can call a local API — does the thinking; mykeep hands it capabilities it doesn't ship with, over a loopback connection on the stick. A stock agent becomes <b>yours</b>, on any machine, and stays private.</p>
+        <p class="section-lede">mykeep has no AI of its own. Your agent does the thinking — Claude Code, Cursor, anything that calls a local API. mykeep hands it capabilities it doesn't ship with, so a stock agent becomes <b>yours</b>, on any machine, and stays private.</p>
       </div>
 
       <div class="grid3">
         <article class="feat reveal">
           <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 19 5.5V11c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V5.5Z"/><path d="m9 12 2 2 4-4"/></svg></span>
           <h3>Private by design</h3>
-          <p>Everything runs on the stick — no cloud round-trips, no telemetry, no accounts. Each capability and its data are encrypted at rest; lose the stick and a thief gets only ciphertext.</p>
+          <p>Everything runs on the drive — no cloud, no telemetry, no accounts. Each capability and its data are encrypted at rest; lose the drive and a thief gets ciphertext.</p>
         </article>
         <article class="feat reveal">
           <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17V7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10"/><path d="M2 17h20"/><path d="m8 9 2 2-2 2"/><path d="M13 13h3"/></svg></span>
           <h3>Works with any agent</h3>
-          <p>Any client that can make a local HTTP call plugs in — Claude Code, Cursor, custom agents. A pasted snippet is the whole integration: no SDK, no plugin, no MCP required.</p>
+          <p>Any client that makes a local HTTP call plugs in — Claude Code, Cursor, custom agents. A pasted snippet is the whole integration: no SDK, no plugin, no MCP.</p>
         </article>
         <article class="feat reveal">
           <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="10" width="10" height="9" rx="1.5"/><path d="M9 10V7.5a3 3 0 0 1 6 0V10"/><path d="M12 14v2"/></svg></span>
           <h3>Carry it anywhere</h3>
-          <p>The drive is the whole platform — binaries, config, and data all live on it. Plug into Windows, macOS, or Linux; pure-Go static binaries mean no installer, no runtime, no lock-in.</p>
+          <p>The drive is the whole platform — binaries, config, and data live on it. Plug into Windows, macOS, or Linux; pure-Go static binaries mean no installer, no runtime.</p>
         </article>
       </div>
     </div>
@@ -366,7 +366,7 @@
       <div class="section-head reveal">
         <p class="eyebrow">The suite</p>
         <h2 class="section-title">Four portable capabilities.</h2>
-        <p class="section-lede">Each component is a self-contained capability — its own pure-Go binary and encrypted file — that any agent can use on its own, or all together behind <b>one password</b>. All four have shipped.</p>
+        <p class="section-lede">Each component is self-contained — its own pure-Go binary and encrypted file — usable alone or all together behind <b>one password</b>. All four have shipped.</p>
       </div>
 
       <div class="suite-grid">
@@ -374,7 +374,7 @@
         <article class="comp reveal">
           <h3>Capsule</h3>
           <p class="role">portable encrypted memory</p>
-          <p class="desc">A single encrypted file you carry on the stick. Plug it into any machine and your agent's memory travels with you — semantic + keyword recall, never the cloud.</p>
+          <p class="desc">One encrypted file on the drive. Your agent's memory goes with you — semantic + keyword recall, never the cloud.</p>
           <div class="chips">
             <span class="chip">AES-256-GCM at rest</span>
             <span class="chip">local CPU embeddings</span>
@@ -393,7 +393,7 @@
         <article class="comp reveal">
           <h3>Vault</h3>
           <p class="role">a by-reference secrets broker</p>
-          <p class="desc">Your API keys live encrypted beside your memory. The agent makes authenticated calls <em>by reference</em> through a local broker, so the raw secret never reaches the model or the cloud.</p>
+          <p class="desc">API keys stay encrypted on the drive. The agent makes authenticated calls <em>by reference</em> through a local broker — the raw secret never reaches the model or the cloud.</p>
           <div class="chips">
             <span class="chip">key never seen by the agent</span>
             <span class="chip">SSRF-hardened egress</span>
@@ -412,7 +412,7 @@
         <article class="comp reveal">
           <h3>Showstone</h3>
           <p class="role">a portable browser it drives</p>
-          <p class="desc">A real Chromium your agent drives over a loopback REST API — reads pages as compact text, acts on numbered elements, and screenshots on demand. Sensitive actions block for your approval.</p>
+          <p class="desc">A real Chromium your agent drives over a loopback API — reads pages as compact text, acts on numbered elements, screenshots on demand. Sensitive actions block for your approval.</p>
           <div class="chips">
             <span class="chip">indexed-element snapshots</span>
             <span class="chip">sealed, portable profile</span>
@@ -431,7 +431,7 @@
         <article class="comp reveal">
           <h3>Foundry</h3>
           <p class="role">a sandboxed tool host</p>
-          <p class="desc">Runs tools — JavaScript in a WebAssembly sandbox — with only the capabilities you grant. It gives them an encrypted backend (kv, queue, cache, blobs) and a signed marketplace to install from.</p>
+          <p class="desc">Runs tools — JavaScript in a WebAssembly sandbox — with only the capabilities you grant. Each gets an encrypted backend (kv, queue, cache, blobs) and a signed marketplace to install from.</p>
           <div class="chips">
             <span class="chip">WASM sandbox</span>
             <span class="chip">kv · queue · cache · blob</span>
