@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>mykeep — local AI capabilities, on a USB stick</title>
-<meta name="description" content="mykeep is a portable suite of local capabilities — memory, keys, a browser — that any AI agent plugs into over a loopback API. One stick, any machine. No cloud, no install, no lock-in.">
+<meta name="description" content="mykeep is a portable suite of local capabilities — memory, keys, a browser, tools — that any AI agent plugs into over a loopback API. One stick, any machine. No cloud, no install, no lock-in.">
 <meta name="theme-color" content="#0a0a0b">
 <meta property="og:title" content="mykeep — local AI capabilities, on a USB stick">
-<meta property="og:description" content="A portable suite of capabilities that make any AI agent yours — memory, keys, a browser — sealed on a USB stick. Private, personal, portable.">
+<meta property="og:description" content="A portable suite of capabilities for any AI agent — memory, keys, a browser, tools — on a USB stick. Private, personal, portable.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://mykeep.ai">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230a0a0b'/%3E%3Crect x='1' y='1' width='30' height='30' rx='7' fill='none' stroke='%235e9eff' stroke-opacity='.6'/%3E%3Ctext x='16' y='22' font-family='ui-monospace,Menlo,monospace' font-size='18' font-weight='600' text-anchor='middle' fill='%23ededef'%3Em%3C/text%3E%3C/svg%3E">
@@ -195,7 +195,6 @@
     position:relative;transition:border-color .25s var(--ease),transform .25s var(--ease),box-shadow .25s var(--ease);
   }
   .comp:hover{border-color:var(--line-2);transform:translateY(-3px);box-shadow:0 18px 44px rgba(0,0,0,.34);}
-  .comp.planned{background:var(--panel);border-style:dashed;}
   .comp-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
   .badge{
     display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);
@@ -289,9 +288,9 @@
   <!-- HERO -->
   <section class="hero" id="top">
     <div class="wrap">
-      <span class="pill reveal"><span class="dot"></span>Three capabilities <b>shipped</b> — Capsule, Vault, Showstone</span>
+      <span class="pill reveal"><span class="dot"></span>Four capabilities <b>shipped</b> — Capsule, Vault, Showstone, Foundry</span>
       <h1 class="headline reveal">Local AI capabilities, on a <span class="accent">USB stick</span>.</h1>
-      <p class="lede reveal">mykeep is a portable suite of local capabilities — <b>memory, keys, a browser</b> — that any AI agent plugs into over a loopback API. One binary and an encrypted file per capability, sealed on a drive you carry.</p>
+      <p class="lede reveal">mykeep is a portable suite of local capabilities — <b>memory, keys, a browser, tools</b> — that any AI agent plugs into over a loopback API. One binary and an encrypted file per capability, on a drive you carry.</p>
       <p class="lede reveal">Plug the stick into <b>any machine</b> — Windows, macOS, Linux — and your agent's powers travel with it. No cloud, no install, no lock-in.</p>
       <div class="creed reveal"><span>Personal</span><i>/</i><span>Private</span><i>/</i><span>Portable</span></div>
 
@@ -309,7 +308,7 @@
 <span class="ok">  ✓</span> <span class="nm">capsule  </span> <span class="cm">memory   — encrypted, semantic + keyword recall</span>
 <span class="ok">  ✓</span> <span class="nm">vault    </span> <span class="cm">keys     — authenticated calls by reference</span>
 <span class="ok">  ✓</span> <span class="nm">showstone</span> <span class="cm">browser  — a real Chromium it drives</span>
-<span class="cm">  …</span> <span class="nm">foundry  </span> <span class="cm">tools    — planned</span>
+<span class="ok">  ✓</span> <span class="nm">foundry  </span> <span class="cm">tools    — JavaScript in a WASM sandbox</span>
 
   <span class="ar">→</span> http://127.0.0.1:8765  <span class="cm">(loopback · any agent plugs in)</span></div>
       </div>
@@ -322,7 +321,7 @@
       <div class="section-head reveal">
         <p class="eyebrow">How it works</p>
         <h2 class="section-title">You bring the agent. mykeep brings the capabilities.</h2>
-        <p class="section-lede">mykeep has no AI of its own. Your agent — Claude Code, Cursor, anything that can call a local API — does the thinking; mykeep hands it advanced capabilities it doesn't ship with, over a loopback connection on the stick. A stock agent becomes <b>yours</b>, on any machine, owned and private.</p>
+        <p class="section-lede">mykeep has no AI of its own. Your agent — Claude Code, Cursor, anything that can call a local API — does the thinking; mykeep hands it capabilities it doesn't ship with, over a loopback connection on the stick. A stock agent becomes <b>yours</b>, on any machine, and stays private.</p>
       </div>
 
       <div class="grid3">
@@ -350,8 +349,8 @@
     <div class="wrap">
       <div class="section-head reveal">
         <p class="eyebrow">The suite</p>
-        <h2 class="section-title">A growing kit of portable, local capabilities.</h2>
-        <p class="section-lede">Each component is a self-contained capability — its own pure-Go binary and encrypted file — that any agent can use on its own, or all together behind <b>one password</b>. Three have shipped; one is next.</p>
+        <h2 class="section-title">Four portable, local capabilities.</h2>
+        <p class="section-lede">Each component is a self-contained capability — its own pure-Go binary and encrypted file — that any agent can use on its own, or all together behind <b>one password</b>. All four have shipped.</p>
       </div>
 
       <div class="suite-grid">
@@ -428,24 +427,26 @@
         </article>
 
         <!-- Foundry -->
-        <article class="comp planned reveal">
+        <article class="comp reveal">
           <div class="comp-top">
-            <span class="badge"><span class="d"></span>Planned</span>
+            <span class="badge ship"><span class="d"></span>Shipped · v1</span>
             <span class="meta-note">it does more</span>
           </div>
           <h3>Foundry</h3>
-          <p class="role">a backend-in-a-box</p>
-          <p class="desc">A local server that hosts plug-and-play skills and tools <em>and</em> the infrastructure they run on — database, queue, cache, object storage — all sealed on the stick.</p>
+          <p class="role">a sandboxed tool host</p>
+          <p class="desc">Runs tools — JavaScript in a WebAssembly sandbox — with only the capabilities you grant. It gives them an encrypted backend (kv, queue, cache, blobs) and a signed marketplace to install from.</p>
           <div class="chips">
-            <span class="chip">plug-and-play tools</span>
-            <span class="chip">db · queue · cache · storage</span>
-            <span class="chip">sealed on the stick</span>
+            <span class="chip">WASM sandbox</span>
+            <span class="chip">kv · queue · cache · blob</span>
+            <span class="chip">capability-scoped</span>
+            <span class="chip">zero CGo</span>
           </div>
           <div class="comp-cta">
             <a class="gh" href="https://github.com/lexxx233/mykeep-foundry" target="_blank" rel="noopener">
               <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.4 7.4 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
-              Read the vision
+              GitHub
             </a>
+            <span class="meta-note">MIT-licensed</span>
           </div>
         </article>
       </div>
@@ -456,7 +457,7 @@
   <section class="section" id="why">
     <div class="wrap">
       <div class="why reveal">
-        <blockquote>The powers your AI relies on should belong to <span class="accent">you</span> — running on hardware you hold, owing nothing to the cloud, answering to no one else.</blockquote>
+        <blockquote>The capabilities your AI relies on should run on hardware <span class="accent">you</span> hold — not a cloud you rent.</blockquote>
         <p class="attrib">— the mykeep premise</p>
       </div>
     </div>
